@@ -1,0 +1,51 @@
+import Mock from "mockjs";
+
+const assetsList = new Array(100).fill().map((item, index) => {
+  const bool = index % 2 === 0;
+  return {
+    type: bool ? "设备" : "家具",
+    code: "SB20190814" + (Math.random() * (Math.random() * 100000)).toFixed(2),
+    name: "资产名称",
+    image: require("@/assets/images/weixin.png"),
+    price: (Math.random() * (Math.random() * 100000)).toFixed(2),
+    factoryNo: (Math.random() * (Math.random() * 100000)).toFixed(2),
+    stockDate: new Date(),
+    checked: false,
+    advance_scrap: null,
+    advice: null,
+    assets_type: "equipment",
+    assets_types: "equipment",
+    backstock_type: 1,
+    base_dep_code: "2401",
+    base_dep_name: "电子信息技术专业中心实验室",
+    base_teacher_name_request: "苟旭",
+    base_teacher_no_request: "20032016",
+    bpm_no: "1908150008",
+    business_code: "acceptance",
+    business_id: "912340254",
+    business_name: "设备建账",
+    business_type: "accept",
+    canback: 1,
+    cancel_num: 0,
+    delete_status: null,
+    finance_state: null,
+    finish_time: null,
+    id: "912340254",
+    material_money: null,
+    max_price: 4445,
+    merge_bpm_no: null,
+    money: 4445,
+    new_base_teacher_no: null,
+    node: "manager",
+    node_name: "单位资产管理员审核",
+    num: 1,
+    request_time: "2019-08-15 09:39:26",
+    request_type: "personal",
+    rownum_: 1,
+    source: "normal",
+    state: 0,
+    subject: "爱手工打造的,1种1台件,总值4445元",
+    submit_time: "2019-08-15 09:39:29"
+  };
+});
+Mock.mock(/\/business/, "get", assetsList);

@@ -1,0 +1,333 @@
+<template>
+  <div id="wrapper">
+    <a-layout id="container">
+      <query-sider
+        type="business"
+        @handleSubmit="handleQuery"
+        @keeperChange="handleKeeperValue"
+        @depChange="handleDepValue"
+        @codeChange="handleCodeValue"
+        @assetsTypeChange="handlAssetsTypeValue"
+        @formValueChange="handleBpmNoValue"
+      />
+      <a-layout-content>
+        <a-layout-content id="assets-content">
+          <a-list
+            :dataSource="assetsList"
+            :size="'large'"
+            :pagination="pagination"
+          >
+            <slot slot="header">
+              <!-- <a-radio-group size="large" defaultValue="bpmNo">
+                <a-radio-button value="bpmNo">
+                  业务号
+                  <a-icon type="sort-ascending" />
+                </a-radio-button>
+                <a-radio-button value="submitTime">
+                  提交时间
+                  <a-icon type="sort-ascending" />
+                </a-radio-button>
+                <a-radio-button value="price">
+                  价格
+                  <a-icon type="sort-ascending" />
+                </a-radio-button>
+              </a-radio-group> -->
+              <SortGroup :options="sorts" @sortChange="handleSortChange" />
+              <router-view ref="sortContent" />
+            </slot>
+            <a-list-item slot="renderItem" slot-scope="item">
+              <a-list-item-meta>
+                <slot slot="description">
+                  <div>资产名称：{{ item.name }}</div>
+                  <div class="currency">价格：￥{{ item.price }}</div>
+                  <!-- <div >入库日期：{{item.stockDate | formate(YYYY-MM-DD)}}</div> -->
+                </slot>
+                <a slot :description="'价格：' + item.price"></a>
+                <a
+                  slot="title"
+                  href="https://vue.ant.design/"
+                  class="assetsColor"
+                  >{{ item.code }}</a
+                >
+                <a-avatar slot="avatar" :src="item.image" />
+              </a-list-item-meta>
+              <slot slot="actions">
+                <a-button
+                  size="large"
+                  type="dashed"
+                  icon="qrcode"
+                  @click="printTagBpm"
+                  >打印标签</a-button
+                >
+                <a-button
+                  v-for="bill in item.billArray"
+                  :key="bill.code"
+                  size="large"
+                  type="default"
+                  icon="printer"
+                  @click="printBill(bill)"
+                  >打印{{ bill.name }}</a-button
+                >
+              </slot>
+            </a-list-item>
+          </a-list>
+        </a-layout-content>
+      </a-layout-content>
+    </a-layout>
+  </div>
+</template>
+
+<script>
+import QuerySider from "@/components/QuerySider";
+import { prefixZero } from "../utils/commonUtils";
+import { getAssetsList } from "@/api/business.js";
+import SortGroup from "@/components/SortGroup";
+import { businessChangeRow } from "../utils/billLink.js";
+// const assetsList = new Array(100).fill().map((item, index) => {
+//   const bool = index % 2 === 0;
+//   return {
+//     type: bool ? "设备" : "家具",
+//     code: "SB20190814" + prefixZero(index, 4),
+//     name: "资产名称",
+//     image: require("@/assets/images/weixin.png"),
+//     price: (Math.random() * (Math.random() * 100000)).toFixed(2),
+//     factoryNo: prefixZero(index, 14),
+//     stockDate: new Date(),
+//     checked: false
+//   };
+// });
+
+export default {
+  components: {
+    QuerySider,
+    SortGroup
+  },
+  data() {
+    return {
+      sorts: [
+        {
+          value: "bpmNo",
+          label: "业务号",
+          type: "asc"
+        },
+        {
+          value: "submitTime",
+          label: "提交时间",
+          type: "asc"
+        },
+        {
+          value: "price",
+          label: "价格",
+          type: "asc"
+        }
+      ],
+      params: {
+        fields: "",
+        start: 1,
+        limit: 25,
+        totals: "sum(num),sum(money)",
+        sort: this.sortData,
+        businessRole: "",
+        stockState: "",
+        printCode: "",
+        businessType: "",
+        businessCode: "",
+        baseTeacherNo: "",
+        baseTeacherName: "",
+        bpmNo: "",
+        keyword: "",
+        chartsprovider_: "",
+        request_method_: "",
+        browser_version_: "",
+        browser_: "",
+        page: "",
+        assetsType: "",
+        dep: ""
+      },
+      sortData: "",
+      assetsList: [],
+      pagination: {
+        current: 1,
+        pageSize: 25,
+        pageSizeOptions: ["5", "10", "25", "50", "100", "200", "500", "1000"],
+        showSizeChanger: true,
+        showTotal: (total, range) =>
+          `${range[0]} ~ ${range[1]} 项, 共计 ${total} 项`,
+        size: "large",
+        position: "top",
+        onChange: page => {
+          this.pagination.current = page;
+          this.query();
+        },
+        onShowSizeChange: (current, size) => {
+          this.pagination.pageSize = size;
+          this.query();
+        }
+      }
+    };
+  },
+  computed: {
+    //  assetsList() {
+    //     if (!this.items || !this.items.length) {
+    //     getAssetsList().then(function (response) {
+    //       console.log(response);
+    //       return response;
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error)
+    //     })
+    //   }
+    //  },
+  },
+  mounted() {
+    this.$on("roleChange", this.handleRoleChange);
+  },
+  methods: {
+    printTagBpm() {
+      this.$info({
+        title: "建设中",
+        content: "功能建设中, 敬请期待..."
+      });
+    },
+    printBill(bill) {
+      if (!bill.code) {
+        return;
+      }
+      if (bill.params == undefined) {
+        bill.params = "{}";
+      }
+      var data = $.parseJSON(bill.params);
+      data.code = bill.code;
+      this.openWindow("e?page=base.business.bill.printpreview", data);
+    },
+    openWindow(url, data, target) {
+      var lc_ = this.getQueryStringRegExp("lc_");
+      data = $.extend(true, {}, data);
+      if (lc_) {
+        data["lc_"] = lc_;
+      }
+      $("#__windowOpenForm").remove();
+      var fmhtml = $(
+        '<form id="__windowOpenForm" method="post" action=""></form>'
+      );
+      fmhtml.attr("action", url);
+      fmhtml.attr("target", target || "_blank");
+      var input,
+        inputStr = "<input type='hidden'>";
+      for (var o in data) {
+        if ($.isArray(data[o])) {
+          for (var i = 0; i < data[o].length; i++) {
+            input = $(inputStr);
+            input.attr("name", o);
+            input.val(data[o][i]);
+            fmhtml.append(input);
+          }
+        } else {
+          input = $(inputStr);
+          input.attr("name", o);
+          input.val(data[o]);
+          fmhtml.append(input);
+        }
+      }
+      $(document)
+        .find("body")
+        .append(fmhtml);
+      fmhtml = $("#__windowOpenForm");
+      fmhtml.submit();
+      fmhtml.remove();
+    },
+    getQueryStringRegExp(name, href) {
+      if (href == undefined || href == "") {
+        href = location.href;
+      }
+      var qop = this.decodeURLParams(href);
+      return qop[name] || "";
+    },
+    decodeURLParams(url) {
+      var p = {};
+      if (url.indexOf("?") < 0) {
+        return p;
+      }
+      url = url.substring(url.indexOf("?") + 1);
+      var params = url.split("&");
+      for (var i = 0; i < params.length; i++) {
+        var t = params[i].split("=");
+        p[t[0]] = t[1];
+      }
+      return p;
+    },
+    query() {
+      this.params.start = this.pagination.current;
+      this.params.limit = this.pagination.pageSize;
+      if (!this.items || !this.items.length) {
+        getAssetsList(this.params)
+          .then(response => {
+            console.log(response);
+            // this.assetsList = response;
+            this.assetsList = response.map(record => {
+              record.billArray = businessChangeRow(record);
+              return record;
+            });
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    },
+    handleQuery(e) {
+      this.$log.debug(e);
+      this.query();
+    },
+    handleSortChange(sort) {
+      // this.$refs.sortContent.$emit("sortChange", sort);
+      if (sort.active) {
+        this.params.sort = sort.value + " " + sort.type;
+      }
+      this.$log.debug(sort);
+      this.query();
+    },
+    handleRoleChange(role) {
+      this.params.businessRole = role;
+      this.query();
+    },
+    handleBpmNoValue(bpmNo) {
+      this.params.bpmNo = bpmNo;
+    },
+    handleKeeperValue(keeper) {
+      this.params.baseTeacherNo = keeper.split("-")[0];
+      this.params.baseTeacherName = keeper.split("-")[1];
+    },
+    handleDepValue(dep) {
+      this.params.dep = dep;
+    },
+    handleCodeValue(code) {
+      this.params.code = code;
+    },
+    handlAssetsTypeValue(assetsType) {
+      this.params.assetsType = assetsType;
+    }
+  },
+  created() {
+    this.query();
+  }
+};
+</script>
+
+<style lang="less" scoped>
+#wrapper {
+  height: calc(~"100% - 112px");
+}
+#container {
+  height: 100%;
+  .assets-header {
+    padding: 0 20px;
+    height: 64px;
+    background: #fff;
+  }
+  #assets-content {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+</style>

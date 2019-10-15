@@ -1,0 +1,670 @@
+<template>
+  <div class="mask" id="mask" v-show="show">
+    <div class="tips" style="min-height: 360px;" v-show="tipsShow">
+      <div>
+        <button type="button" class="btn-close" @click="show = false">
+          <span>&times;</span>
+        </button>
+      </div>
+      <!-- <div class="imgbox loading"></div> -->
+      <div class="print-animation">
+        <div class="tag" v-show="type === 'tag'">
+          <span class="bs">标签出口</span>
+        </div>
+        <div class="doc" v-show="type === 'doc'">
+          <span class="bs">单据出口</span>
+        </div>
+      </div>
+      <p>正在打印中......</p>
+      <div class="btnbox">
+        <a class="blue" href="javascript:void(0);" onclick="$emit('finish')"
+          ><i class="iconfont icon-pitch-on"></i>成功打印</a
+        >
+        <a class="" href="javascript:void(0);" onclick="$emit('error')"
+          >打印故障</a
+        >
+      </div>
+    </div>
+    <div class="mask" id="logout" v-show="logoutShow">
+      <div class="tips logout">
+        <p>请确认是否退出？</p>
+        <div class="btnbox">
+          <a
+            class="blue"
+            href="javascript:void(0);"
+            id="logout_sure"
+            @click="$emit('logout')"
+            ><i class="iconfont icon-pitch-on"></i>确认</a
+          >
+          <a class="" href="javascript:void(0);" @click="$emit('logoutCancel')"
+            >取消</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="mask" v-show="printTypeShow">
+      <div class="category">
+        <h2>请选择需要打印的类型</h2>
+        <div class="list clearfix">
+          <div class="item">
+            <a
+              href="javascript:void(0);"
+              data-print-type="masterAndAttach"
+              data-modal-close="success"
+              >同时打印主件和附件<em><b id="tagTotalNum">0</b>个标签</em
+              ><span>立即打印</span></a
+            >
+          </div>
+          <div class="item">
+            <a
+              class="green"
+              href="javascript:void(0);"
+              data-print-type="onlyMaster"
+              data-modal-close="success"
+              >仅打印主件<em><b id="tagMasterNum">0</b>个标签</em
+              ><span>立即打印</span></a
+            >
+          </div>
+          <div class="item">
+            <a
+              class="orange"
+              href="javascript:void(0);"
+              data-print-type="onlyAttach"
+              data-modal-close="success"
+              >仅打印附件<em><b id="tagAttachNum">0</b>个标签</em
+              ><span>立即打印</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mask" id="overflowMaxNum" v-show="infoShow">
+      <div class="tips" style="padding: 30px;">
+        <p>
+          对不起, 目前终端限制一次最多打印个标签, 批量打印请前往主管部门办理!
+        </p>
+        <div class="btnbox">
+          <a class="blue" href="javascript:void(0);" @click="infoShow = false"
+            >确认</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  props: {
+    show: Boolean,
+    type: String,
+    logoutShow: Boolean,
+    printTypeShow: Boolean,
+    infoShow: Boolean,
+    tipsShow: Boolean
+  },
+  data: function() {
+    return {
+      show: false,
+      type: "tag",
+      logoutShow: false,
+      printTypeShow: false,
+      infoShow: false,
+      tipsShow: true
+    };
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.mask {
+  width: 100%;
+  font-family: "Microsoft Yahei";
+  background: url(../assets/images/mask.png) 0 0 repeat;
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.mask .tips {
+  width: 700px;
+  text-align: center;
+  background: #fff;
+  border-radius: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -180px;
+  margin-left: -350px;
+}
+.mask .tips .imgbox {
+  width: 100%;
+  height: 200px;
+}
+.mask .tips p {
+  font-size: 28px;
+  color: #999;
+}
+.tips .btnbox {
+  width: 100%;
+  padding: 20px 0;
+}
+.tips .btnbox a {
+  display: inline-block;
+  font-size: 18px;
+  line-height: 38px;
+  padding: 0 24px;
+  color: #3798e4;
+  border: 1px solid #3798e4;
+  border-radius: 6px;
+}
+.tips .btnbox a:hover {
+  text-decoration: none;
+  color: #fff;
+  background: #3798e4;
+}
+.tips .btnbox a:active {
+  color: #fff;
+  background: #3798e4;
+}
+.tips .btnbox a.blue {
+  color: #fff;
+  background: #3798e4;
+}
+.tips .btnbox a.blue:active {
+  background: #47a4ed;
+}
+.mask button.btn-close {
+  float: right;
+  width: 36px;
+  height: 36px;
+  line-height: 1;
+  font-size: 21px;
+  font-weight: 700;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 22px !important;
+  text-shadow: 0 1px 0 #fff;
+  cursor: pointer;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+}
+/* 正在打印动画 */
+.print-animation {
+  width: 410px;
+  height: 530px;
+  background: url(../assets/images/machine.png) center 0 no-repeat;
+  margin: 0 auto;
+  z-index: 99;
+}
+.print-animation .tag {
+  width: 60px;
+  height: 160px;
+  background-image: url(../assets/images/tag.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 50%;
+  margin-left: -30px;
+  top: 319px;
+}
+.print-animation .doc {
+  width: 130px;
+  height: 160px;
+  background: url(../assets/images/document.png) center -30px no-repeat;
+  position: absolute;
+  left: 50%;
+  margin-left: -65px;
+  top: 390px;
+}
+.print-animation .disabled {
+  display: none;
+}
+
+.print-animation .tag .bs {
+  display: block;
+  width: 200px;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  margin-left: -100px;
+}
+.print-animation .doc .bs {
+  display: block;
+  width: 200px;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  top: 27px;
+  left: 50%;
+  margin-left: -100px;
+}
+
+.print-animation .tag {
+  animation: print-tag 1.5s infinite ease-in;
+}
+.print-animation .doc {
+  animation: print-doc 1.5s infinite ease-in;
+}
+@keyframes print-tag {
+  0% {
+    background-position: center -85px;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.2;
+  }
+  100% {
+    background-position: center 160px;
+    opacity: 0;
+  }
+}
+@keyframes print-doc {
+  0% {
+    background-position: center -135px;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.2;
+  }
+  100% {
+    background-position: center 160px;
+    opacity: 0;
+  }
+}
+
+/*打印码*/
+.print-number {
+  width: 1300px;
+  text-align: center;
+  padding-top: 200px;
+  margin: 0 auto;
+}
+.print-number > .title {
+  color: #fff;
+  font-size: 48px;
+  font-weight: bold;
+}
+.inputs {
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+.inputs input {
+  display: inline-block;
+  width: 180px;
+  height: 180px;
+  text-align: center;
+  font-size: 80px;
+  font-weight: 600;
+  color: #555;
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.3);
+  margin: 0 15px;
+  opacity: 0.9;
+}
+.number-msg {
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+}
+.number-msg span {
+  color: #aaa;
+}
+.print-number .inputs {
+  margin-bottom: 50px;
+}
+
+.print-info-ms {
+  width: 1300px;
+  padding-top: 160px;
+  padding-right: 210px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+}
+.print-info-ms .ms {
+  width: 990px;
+  min-height: 500px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 10px 35px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+.print-info-ms .ms > .title {
+  line-height: 50px;
+  font-size: 24px;
+  color: #607d8b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.print-info-ms .ms dl {
+  line-height: 60px;
+  font-size: 30px;
+  color: #444;
+  padding-top: 50px;
+}
+.print-info-ms .ms dt,
+.print-info-ms .ms dd {
+  position: relative;
+  padding-left: 195px;
+  box-sizing: border-box;
+}
+.print-info-ms .ms dt {
+  font-weight: 600;
+  line-height: 30px;
+  margin-bottom: 30px;
+}
+.print-info-ms .ms dl span {
+  display: block;
+  width: 195px;
+  font-weight: 300;
+  text-align: right;
+  color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.print-info-ms .ms dd {
+  width: 50%;
+  float: left;
+}
+
+.print-info-ms .btn-bar {
+  position: absolute;
+  top: 160px;
+  right: 0;
+}
+.print-info-ms .btn-bar a {
+  display: block;
+  width: 220px;
+  line-height: 32px;
+  font-size: 24px;
+  color: #fff;
+  background: rgba(33, 150, 243, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+  padding: 30px 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.print-info-ms .btn-bar a i {
+  font-size: 30px;
+  margin-right: 12px;
+}
+.print-info-ms .btn-bar a.light {
+  background: rgba(0, 188, 212, 0.7);
+}
+.print-info-ms .btn-bar a.yellow {
+  background: rgba(145, 116, 111, 0.7);
+}
+
+.print-info-ms table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.print-info-ms table th,
+.print-info-ms table td {
+  padding: 0 10px;
+}
+.print-info-ms table th {
+  line-height: 40px;
+  font-size: 24px;
+  font-weight: 300;
+  color: #888;
+}
+.print-info-ms table td {
+  line-height: 24px;
+  font-size: 22px;
+  color: #555;
+  font-weight: 600;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shezhi:before {
+  content: "\e616";
+}
+
+.icon-error:before {
+  content: "\e613";
+}
+
+.icon-shu:before {
+  content: "\e61c";
+}
+
+.icon-pitch-on:before {
+  content: "\e62f";
+}
+
+.icon-yzm:before {
+  content: "\e668";
+}
+
+.icon-help:before {
+  content: "\e60a";
+}
+
+.icon-mima:before {
+  content: "\e614";
+}
+
+.icon-del:before {
+  content: "\e604";
+}
+
+.icon-yonghu:before {
+  content: "\e606";
+}
+
+.icon-search:before {
+  content: "\e600";
+}
+
+.icon-fold:before {
+  content: "\e607";
+}
+
+.icon-unfold:before {
+  content: "\e608";
+}
+
+.icon-mobile:before {
+  content: "\e612";
+}
+
+.icon-phone:before {
+  content: "\e61b";
+}
+
+.icon-tuichu:before {
+  content: "\e609";
+}
+
+.icon-equ:before {
+  content: "\e629";
+}
+
+.icon-iconfontrenminbifuben:before {
+  content: "\e665";
+}
+
+.icon-print:before {
+  content: "\e603";
+}
+
+.icon-back:before {
+  content: "\e601";
+}
+
+.icon-open:before {
+  content: "\e79f";
+}
+
+.icon-ing:before {
+  content: "\e60b";
+}
+
+.icon-edit:before {
+  content: "\e6b0";
+}
+
+.icon-wodebumen:before {
+  content: "\e605";
+}
+
+.icon-keyboard:before {
+  content: "\e684";
+}
+
+.icon-leimu:before {
+  content: "\e60c";
+}
+
+.icon-shebei:before {
+  content: "\e6bc";
+}
+
+.icon-task:before {
+  content: "\e65c";
+}
+
+.icon-software:before {
+  content: "\e68e";
+}
+
+.icon-tuichu1:before {
+  content: "\e617";
+}
+
+.icon-tag:before {
+  content: "\e639";
+}
+
+.icon-chosed:before {
+  content: "\e602";
+}
+
+.icon-shut-down:before {
+  content: "\e615";
+}
+
+.icon-code-bar:before {
+  content: "\e64e";
+}
+
+.icon-23:before {
+  content: "\e618";
+}
+
+.icon-arrowdownfilling:before {
+  content: "\e60d";
+}
+
+.icon-yanshou:before {
+  content: "\e624";
+}
+
+.icon-common-xiangmubiaoqian-copy:before {
+  content: "\e619";
+}
+
+.icon-iconfontxinxichaxun:before {
+  content: "\e61a";
+}
+
+.icon-zhanghu:before {
+  content: "\e61f";
+}
+
+.icon-jizhang:before {
+  content: "\e61d";
+}
+
+.icon-allocation:before {
+  content: "\e61e";
+}
+
+.icon-furniture:before {
+  content: "\e68f";
+}
+
+.icon-erweima:before {
+  content: "\e788";
+}
+
+.icon-tongyishenfen:before {
+  content: "\e71b";
+}
+
+.icon-sort:before {
+  content: "\e60e";
+}
+
+.icon-sort-down:before {
+  content: "\e60f";
+}
+
+.icon-sort-up:before {
+  content: "\e610";
+}
+
+.icon-assets:before {
+  content: "\e667";
+}
+
+.icon-setting:before {
+  content: "\e611";
+}
+
+.icon-underway:before {
+  content: "\e69a";
+}
+
+.icon-tiaobo-:before {
+  content: "\e623";
+}
+
+.icon-guzhangzhidaotubiao:before {
+  content: "\e645";
+}
+
+.icon-mobile2:before {
+  content: "\e650";
+}
+
+.icon-message:before {
+  content: "\e625";
+}
+</style>
