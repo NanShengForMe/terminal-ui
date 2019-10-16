@@ -59,7 +59,11 @@
 <script>
 import $ from "jQuery";
 import Qs from "qs";
-import { queryProjectPayList, getPrintUrl } from "@/api/billLink.js";
+import {
+  queryProjectPayList,
+  getPrintUrl,
+  getTagAction
+} from "@/api/billLink.js";
 
 export default {
   props: {
@@ -188,12 +192,24 @@ export default {
     print() {
       if (this.type === "tag") {
         // 标签直接拼接打印地址即可，注意：此处的地址需响应系统配置，二维码标签或条形码标签
+        var tagAction = "";
+        getTagAction()
+          .then(url => {
+            tagAction = url;
+          })
+          .catch(error => {
+            this.$log.error(error);
+            this.visible = false;
+          });
         this.printUrl =
-          "e?page=assets.accept.tag&" +
+          "e?page=" +
+          tagAction +
+          "&" +
           Qs.stringify(this.printParams, { arrayFormat: "brackets" });
         this.printInternal();
       } else {
         // 业务单据需要通过billCode和打印参数获取真实的url
+        this.params.code = this.billCode;
         getPrintUrl(this.params)
           .then(url => {
             this.printUrl = url;

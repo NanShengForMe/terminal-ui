@@ -12,4 +12,5 @@ export const queryProjectPayList = acceptanceId =>
     acceptanceId
   });
 export const getPrintUrl = params =>
-  callAction(store.getters.URL.queryProjectPayList, params);
+  callAction(store.getters.URL.getPrintUrl, params);
+export const getTagAction = () => callAction(store.getters.URL.getTagAction);

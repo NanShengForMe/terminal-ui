@@ -16,7 +16,12 @@ Mock.mock(/\/config/, "get", {
         sortedNodeCache: "base.business.process.node.querySortedNode",
         getBaseTeacher: "base.teacher.autocomplete",
         getBaseDep: "assets.acceptance.division.assetsDepsAuto",
-        getBusinessList: "terminal.query.businessList"
+        getBusinessList: "terminal.query.businessList",
+        getPrintUrl: "base.business.bill.printpreview",
+        getTagAction: "assets.acceptance.common.getTagAction",
+        queryProjectPayList: "terminal.query.projectPays",
+        getBusinessType: "terminal.query.businessTypes",
+        getAssetsType: "terminal.query.assetsTypeStatis"
       }
     },
     // {
@@ -59,7 +64,15 @@ Mock.mock(/\/config/, "get", {
         getBaseTeacher: "base.teacher.autocomplete",
         getBaseDep: "assets.acceptance.division.assetsDepsAuto",
         getBusinessList: "terminal.query.businessList",
+<<<<<<< HEAD
         getAssetsList: "terminal.query.assetsList"
+=======
+        getPrintUrl: "base.business.bill.printpreview",
+        getTagAction: "assets.acceptance.common.getTagAction",
+        queryProjectPayList: "terminal.query.projectPays",
+        getBusinessType: "terminal.query.businessTypes",
+        getAssetsType: "terminal.query.assetsTypeStatis"
+>>>>>>> b79db53d6a541d18424fb5281b626284080977cc
       }
     }
   ]
