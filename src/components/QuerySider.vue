@@ -164,6 +164,8 @@ export default {
   methods: {
     handleSearchDep(value) {
       if (this.type) {
+        var params = {};
+        params.filter = value;
         getBaseDep(value)
           .then(response => {
             console.log(response);
@@ -183,8 +185,8 @@ export default {
         getBaseTeacher(param)
           .then(response => {
             console.log(response);
-            this.keepers = response.map(
-              keeper => `${keeper.value}-${keeper.label}`
+            this.keepers = response.resultset.map(
+              keeper => `${keeper.code}-${keeper.name}`
             );
           })
           .catch(function(error) {

@@ -57,7 +57,9 @@
       <span class="my" href="/home">我的</span>
     </router-link>
     <div class="users" v-if="isLoggedIn">
-      <div class="name">{{ user.username }}-{{ user.name }}</div>
+      <div class="name">
+        {{ user.userinfo.username }}-{{ user.userinfo.name }}
+      </div>
       <div class="role">
         {{ user.identity === "teacher" ? "教师" : "学生" }}
       </div>

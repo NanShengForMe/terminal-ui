@@ -42,8 +42,8 @@ export const cardLogin = token =>
 //   });
 export const weiXinLogin = () =>
   callAction("base.login.login", {
-    userid: "20032016",
-    password: "20032016"
+    userid: "10277",
+    password: "1234"
   });
 
 export const logout = () =>

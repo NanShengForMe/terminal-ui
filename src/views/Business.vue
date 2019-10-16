@@ -38,11 +38,14 @@
             <a-list-item slot="renderItem" slot-scope="item">
               <a-list-item-meta>
                 <slot slot="description">
-                  <div>资产名称：{{ item.name }}</div>
-                  <div class="currency">价格：￥{{ item.price }}</div>
-                  <!-- <div >入库日期：{{item.stockDate | formate(YYYY-MM-DD)}}</div> -->
+                  <div>资产名称：{{ item.subject }}</div>
+                  <div>业务号：{{ item.bpm_no }}</div>
+                  <div class="currency">价格：￥{{ item.money }}</div>
+                  <div>时间：{{ item.submit_time | format }}</div>
+                  <div>申请人：{{ item.base_teacher_name_request }}</div>
+                  <div>当前节点：{{ item.node_name }}</div>
                 </slot>
-                <a slot :description="'价格：' + item.price"></a>
+                <a slot :description="'价格：' + item.money"></a>
                 <a
                   slot="title"
                   href="https://vue.ant.design/"
@@ -135,8 +138,8 @@ export default {
         businessRole: "",
         stockState: "",
         printCode: "",
-        businessType: "",
-        businessCode: "",
+        businessType: "accept",
+        businessCode: "acceptance",
         baseTeacherNo: "",
         baseTeacherName: "",
         bpmNo: "",
@@ -145,7 +148,6 @@ export default {
         request_method_: "",
         browser_version_: "",
         browser_: "",
-        page: "",
         assetsType: "",
         dep: ""
       },
@@ -208,7 +210,8 @@ export default {
         .then(response => {
           console.log(response);
           // this.assetsList = response;
-          this.assetsList = response.map(record => {
+          this.assetsList = response.resultset.map(record => {
+            record.image = require("@/assets/images/weixin.png");
             record.billArray = businessChangeRow(record);
             return record;
           });

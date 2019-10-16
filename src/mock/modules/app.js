@@ -15,7 +15,8 @@ Mock.mock(/\/config/, "get", {
         billAndConfigCache: "base.business.bill.queryPrintableBill",
         sortedNodeCache: "base.business.process.node.querySortedNode",
         getBaseTeacher: "base.teacher.autocomplete",
-        getBaseDep: "assets.acceptance.division.assetsDepsAuto"
+        getBaseDep: "assets.acceptance.division.assetsDepsAuto",
+        getBusinessList: "terminal.query.businessList"
       }
     },
     // {
@@ -56,7 +57,8 @@ Mock.mock(/\/config/, "get", {
         billAndConfigCache: "base.business.bill.queryPrintableBill",
         sortedNodeCache: "base.business.process.node.querySortedNode",
         getBaseTeacher: "base.teacher.autocomplete",
-        getBaseDep: "assets.acceptance.division.assetsDepsAuto"
+        getBaseDep: "assets.acceptance.division.assetsDepsAuto",
+        getBusinessList: "terminal.query.businessList"
       }
     }
   ]

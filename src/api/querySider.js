@@ -10,5 +10,5 @@ export const getBusinessType = businessType =>
 export const getBaseTeacher = params =>
   callAction(store.getters.URL.getBaseTeacher, params);
 
-export const getBaseDep = businessType =>
-  callAction(store.getters.URL.getBaseDep, businessType);
+export const getBaseDep = params =>
+  callAction(store.getters.URL.getBaseDep, params);

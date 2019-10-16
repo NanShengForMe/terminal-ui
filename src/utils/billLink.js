@@ -243,7 +243,7 @@ function queryPrintableBill(businessCode, role, params) {
   }
   var sortedNodeCache = "";
   sortedNodeCache = store.getters.product.sortedNodeCache;
-  var sortedNodeList = sortedNodeCache; //表格就会加载一个js文件，这个js文件里面有此变量
+  var sortedNodeList = sortedNodeCache.resultset; //表格就会加载一个js文件，这个js文件里面有此变量
   for (var t in sortedNodeList) {
     var node = sortedNodeList[t];
 
