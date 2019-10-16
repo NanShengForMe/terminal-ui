@@ -4,8 +4,8 @@ import { callAction } from "@/utils/request.js";
 export const getAssetsType = businessType =>
   callAction(store.getters.URL.getAssetsType, businessType);
 
-export const getBusinessType = businessType =>
-  callAction(store.getters.URL.getBusinessType, businessType);
+export const getBusinessType = businessRole =>
+  callAction(store.getters.URL.getBusinessType, businessRole);
 
 export const getBaseTeacher = params =>
   callAction(store.getters.URL.getBaseTeacher, params);

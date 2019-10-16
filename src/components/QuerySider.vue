@@ -150,8 +150,12 @@ export default {
       assetsTypes: [],
       businesses: [],
       deps: [],
-      keepers: []
+      keepers: [],
+      businessRole: "personal"
     };
+  },
+  mounted() {
+    this.$on("roleChange", this.handleRoleChange);
   },
   computed: {
     isAssets() {
@@ -169,7 +173,9 @@ export default {
         getBaseDep(value)
           .then(response => {
             console.log(response);
-            this.deps = response.map(dep => `${dep.value}-${dep.label}`);
+            this.deps = response.resultset.map(
+              dep => `${dep.code}-${dep.name}`
+            );
           })
           .catch(function(error) {
             console.log(error);
@@ -196,6 +202,9 @@ export default {
     },
     handleSubmit() {
       this.$log.debug(this.formData);
+    },
+    handleRoleChange(role) {
+      this.businessRole = role;
     }
   },
   created() {
@@ -210,10 +219,12 @@ export default {
         });
     }
     if (this.isBusiness) {
-      getBusinessType()
+      var params = {};
+      params.businessRole = this.businessRole;
+      getBusinessType(params)
         .then(response => {
           console.log(response);
-          this.businesses = response;
+          this.businesses = response.map(busi => `${busi.code}-${busi.name}`);
         })
         .catch(function(error) {
           console.log(error);

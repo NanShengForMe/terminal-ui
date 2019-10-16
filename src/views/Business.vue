@@ -69,11 +69,8 @@
                   btnIcon="printer"
                   :btnText="bill.name"
                   type="doc"
-                  billCode="requestBill"
-                  :params="{
-                    businessCode: 'acceptance',
-                    businessId: bill.businessId
-                  }"
+                  :billCode="bill.code"
+                  :params="JSON.parse(bill.params)"
                 />
               </slot>
             </a-list-item>
@@ -213,6 +210,7 @@ export default {
           this.assetsList = response.resultset.map(record => {
             record.image = require("@/assets/images/weixin.png");
             record.billArray = businessChangeRow(record);
+            console.log(record);
             return record;
           });
         })
