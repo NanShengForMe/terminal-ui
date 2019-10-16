@@ -83,15 +83,22 @@
                 <a-card-meta :title="item.name">
                   <slot slot="avatar">
                     <img :src="item.image" width="80" />
-                    <div style="font-size: 14px; text-align: center;">
-                      {{ item.type }}
+                    <div
+                      style="font-size: 14px; text-align: center;border: 1px solid green;
+                        width: 77px;
+                        height: 24px;
+                        top: 138px;
+                        right: 13px;
+                        position: absolute;"
+                    >
+                      {{ item.typeName }}
                     </div>
                   </slot>
                   <slot slot="description">
-                    <div>¥ {{ item.price }}</div>
-                    <div class="assets-sn">SN: {{ item.factoryNo }}</div>
+                    <em class="price">¥ {{ item.price }}</em>
+                    <!-- <div class="assets-sn">SN: {{ item.factoryNo }}</div> -->
                     <div class="assets-date">
-                      出厂: {{ item.stockDate | format("YYYY-MM-DD") }}
+                      入库时间: {{ item.stockDate | format("YYYY-MM-DD") }}
                     </div>
                   </slot>
                 </a-card-meta>
@@ -196,7 +203,7 @@ export default {
         fields: "",
         start: 1,
         limit: 25,
-        totals: "sum(num),sum(money)",
+        totals: "",
         sort: this.sortData,
         businessRole: "",
         stockState: "",
@@ -211,7 +218,6 @@ export default {
         request_method_: "",
         browser_version_: "",
         browser_: "",
-        page: "",
         assetsType: "",
         dep: ""
       },
@@ -294,7 +300,17 @@ export default {
       this.params.limit = this.pagination.pageSize;
       getAssetsList(this.params)
         .then(response => {
-          this.assetsList = response.data;
+          console.log(response.resultset);
+          this.assetsList = response.resultset.map(record => {
+            record.image = require("@/assets/images/userhead.jpg");
+            record.typeName = record.type_name;
+            record.code = "编号：" + record.code;
+            record.price = record.price_merge;
+            record.factoryNo = record.factory_no;
+            record.stockDate = record.stock_date;
+            record.checked = false;
+            return record;
+          });
         })
         .catch(error => {
           this.$notification.error({
@@ -381,5 +397,9 @@ h4,
 h5,
 h6 {
   margin: 0;
+}
+.price {
+  font-size: 20px;
+  color: #ed5554;
 }
 </style>

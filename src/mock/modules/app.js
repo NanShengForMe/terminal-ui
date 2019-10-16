@@ -58,7 +58,8 @@ Mock.mock(/\/config/, "get", {
         sortedNodeCache: "base.business.process.node.querySortedNode",
         getBaseTeacher: "base.teacher.autocomplete",
         getBaseDep: "assets.acceptance.division.assetsDepsAuto",
-        getBusinessList: "terminal.query.businessList"
+        getBusinessList: "terminal.query.businessList",
+        getAssetsList: "terminal.query.assetsList"
       }
     }
   ]
