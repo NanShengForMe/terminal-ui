@@ -111,17 +111,17 @@ export default {
     return {
       sorts: [
         {
-          value: "bpmNo",
+          value: "bpm_no",
           label: "业务号",
           type: "asc"
         },
         {
-          value: "submitTime",
+          value: "submit_time",
           label: "提交时间",
           type: "asc"
         },
         {
-          value: "price",
+          value: "money",
           label: "价格",
           type: "asc"
         }

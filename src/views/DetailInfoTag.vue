@@ -86,9 +86,25 @@
       </div>
     </div>
     <div class="btn-bar">
+      <PrintButton
+        btnType="dashed"
+        btnIcon="qrcode"
+        v-if="isBpmTag"
+        btnText="打印资产标签"
+        type="tag"
+        :params="{ codes: ['SB20190814', 'SB20190815'] }"
+      />
+      <PrintButton
+        btnType="dashed"
+        btnIcon="qrcode"
+        v-if="isAssetsTag"
+        btnText="打印资产标签"
+        type="tag"
+        :params="{ codes: ['SB20190814', 'SB20190815'] }"
+      />
       <a-list :dataSource="buttonArr">
         <a-list-item slot="renderItem" slot-scope="it">
-          <a-button
+          <!-- <a-button
             size="large"
             type="primary"
             icon="qrcode"
@@ -103,14 +119,24 @@
             v-if="it.isAssetsTag"
             @click="printTag"
             >打印资产标签</a-button
-          >
-          <a-button
+          > -->
+
+          <!-- <a-button
             size="large"
             type="primary"
             icon="qrcode"
             @click="printBill(it)"
             >打印{{ it.name }}</a-button
-          >
+          > -->
+          <PrintButton
+            :key="it.code"
+            btnType="primary"
+            btnIcon="printer"
+            :btnText="it.name"
+            type="doc"
+            :billCode="it.code"
+            :params="JSON.parse(it.params)"
+          />
         </a-list-item>
       </a-list>
     </div>
@@ -119,7 +145,11 @@
 <script>
 import { getPrintCodeInfo } from "@/api/printCodeLogin.js";
 import { getPrintableBill } from "../utils/billLink.js";
+import PrintButton from "@/components/tools/PrintButton.vue";
 export default {
+  components: {
+    PrintButton
+  },
   data() {
     return {
       assetsList: {},
@@ -130,7 +160,9 @@ export default {
       printCodes: this.$route.params.printCode,
       printTimes: "",
       expireTime: "",
-      statistics: {}
+      statistics: {},
+      isBpmTag: false,
+      isAssetsTag: false
     };
   },
   methods: {
@@ -244,8 +276,15 @@ export default {
   created() {
     let vm = this;
     if (!this.business || !this.business.length) {
-      getPrintCodeInfo(vm.$data.printCodes)
+      var param = {};
+      param.printCode = vm.$data.printCodes;
+      getPrintCodeInfo(param)
         .then(record => {
+          if (record.business) {
+            vm.$data.isBpmTag = true;
+          } else {
+            vm.$data.isAssetsTag = true;
+          }
           vm.$data.assetsList = record.assetsList;
           vm.$data.business = record.business;
           vm.$data.bpi = record.bpi;

@@ -36,7 +36,7 @@
 
 <script>
 import loginQRCode from "loginQRCode";
-import { getCardToken } from "@/api/user.js";
+// import { getCardToken } from "@/api/user.js";
 
 export default {
   data() {
@@ -56,6 +56,11 @@ export default {
       //   getCardToken()
       //     .then(token => this.login("CardLogin", token))
       //     .catch(this.enableCardLogin);
+      // }, 2000);
+      // setTimeout(() => {
+      // getCardToken()
+      //   .then(token => this.login("CardLogin", token))
+      //   .catch(this.enableCardLogin);
       // }, 2000);
     },
     destoryCardLogin() {
@@ -81,7 +86,7 @@ export default {
           const key = "notification_" + Math.random();
           this.$notification.success({
             message: "登录成功",
-            description: `${user.nickname}${
+            description: `${user.userinfo.name}${
               user.identity === "teacher" ? "老师" : "同学"
             }，欢迎回来`,
             duration: 3,
