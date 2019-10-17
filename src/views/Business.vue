@@ -60,7 +60,7 @@
                   btnIcon="qrcode"
                   btnText="打印标签"
                   type="tag"
-                  :params="{ codes: ['SB20190814', 'SB20190815'] }"
+                  :params="{ codes: [item.code] }"
                 />
                 <PrintButton
                   v-for="bill in item.billArray"
