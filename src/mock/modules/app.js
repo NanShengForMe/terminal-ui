@@ -69,7 +69,8 @@ Mock.mock(/\/config/, "get", {
         getTagAction: "assets.acceptance.common.getTagAction",
         queryProjectPayList: "terminal.query.projectPays",
         getBusinessType: "terminal.query.businessTypes",
-        getAssetsType: "terminal.query.assetsTypeStatis"
+        getAssetsType: "terminal.query.assetsTypeStatis",
+        businessCodes: "terminal.query.businessCodes"
       }
     }
   ]

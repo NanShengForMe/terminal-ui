@@ -12,3 +12,6 @@ export const getBaseTeacher = params =>
 
 export const getBaseDep = params =>
   callAction(store.getters.URL.getBaseDep, params);
+
+export const businessCodes = params =>
+  callAction(store.getters.URL.businessCodes, params);

@@ -112,7 +112,7 @@ export default {
         this.$router.push("/");
         this.$notification.info({
           message: "注销登录",
-          description: `${user.nickname}${
+          description: `${user.uesrinfo.name}${
             user.identity === "teacher" ? "老师" : "同学"
           }，您已安全退出`
         });
@@ -200,7 +200,7 @@ export default {
 .header .logo {
   float: left;
   margin-left: 15px;
-  width: 80px;
+  width: 272px;
   margin-top: 24px;
 }
 

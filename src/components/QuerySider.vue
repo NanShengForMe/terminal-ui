@@ -50,7 +50,9 @@
           placeholder="可筛选业务类别"
           notFoundContent="没有可选的业务类别"
           v-model="formData.business"
-          @change="$emit('assetsTypeChange', formData.business)"
+          @change="businessChange"
+          :loadData="loadBusiness"
+          @onblur="$emit('assetsTypeChange', formData.business)"
         />
       </a-form-item>
       <a-form-item label="领用单位">
@@ -128,7 +130,8 @@ import {
   getAssetsType,
   getBusinessType,
   getBaseTeacher,
-  getBaseDep
+  getBaseDep,
+  businessCodes
 } from "@/api/querySider.js";
 export default {
   name: "QuerySider",
@@ -151,7 +154,9 @@ export default {
       businesses: [],
       deps: [],
       keepers: [],
-      businessRole: "personal"
+      businessRole: "personal",
+      businessType: null,
+      businessCode: null
     };
   },
   mounted() {
@@ -205,14 +210,51 @@ export default {
     },
     handleRoleChange(role) {
       this.businessRole = role;
+    },
+    loadBusiness(selectedOptions) {
+      // 获取选中的业务大类
+      const targetOption = selectedOptions[selectedOptions.length - 1];
+      targetOption.loading = true;
+
+      // 加载该业务大类下的业务类别
+      var params = {};
+      params.businessRole = this.businessRole;
+      params.businessType = targetOption.value;
+      businessCodes(params).then(businessCodes => {
+        targetOption.loading = false;
+        // 数据转换
+        targetOption.children = businessCodes.map(businessCode => {
+          return {
+            label: businessCode.name,
+            value: businessCode.code
+          };
+        });
+        // 触发数据更新操作
+        this.businesses = [...this.businesses];
+      });
+    },
+    businessChange(value) {
+      // 第一个值为业务大类
+      this.businessType = value[0];
+      // 第二个值为业务编号
+      this.businessCode = value[1];
     }
   },
   created() {
     if (this.isAssets) {
-      getAssetsType()
+      var param = {};
+      param.businessRole = this.businessRole;
+      getAssetsType(param)
         .then(response => {
           console.log(response);
-          this.assetsTypes = response;
+          console.log(Object.keys(response));
+          this.assetsTypes = Object.values(response).map(element => {
+            return {
+              label: element.name,
+              value: element.code
+            };
+            // element => `${element.code}-${element.name}`
+          });
         })
         .catch(function(error) {
           console.log(error);
@@ -222,9 +264,16 @@ export default {
       var params = {};
       params.businessRole = this.businessRole;
       getBusinessType(params)
-        .then(response => {
-          console.log(response);
-          this.businesses = response.map(busi => `${busi.code}-${busi.name}`);
+        .then(businessTypes => {
+          console.log(businessTypes);
+          this.businesses = businessTypes.map(businessType => {
+            return {
+              label: businessType.name,
+              value: businessType.code,
+              // 标记不是叶子节点, 表示还有下一级
+              isLeaf: false
+            };
+          });
         })
         .catch(function(error) {
           console.log(error);
