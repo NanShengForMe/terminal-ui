@@ -184,7 +184,7 @@ export default {
     return {
       sorts: [
         {
-          value: "stockDate",
+          value: "stock_date",
           label: "入库时间",
           type: "asc"
         },
@@ -194,7 +194,7 @@ export default {
           type: "asc"
         },
         {
-          value: "price",
+          value: "price_merge",
           label: "价格",
           type: "asc"
         }

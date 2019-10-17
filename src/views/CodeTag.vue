@@ -127,6 +127,7 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
+          alert("打印码错误，请确认后再重新输入");
         });
     },
     handleInput(e) {

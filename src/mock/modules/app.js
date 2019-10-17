@@ -70,7 +70,9 @@ Mock.mock(/\/config/, "get", {
         queryProjectPayList: "terminal.query.projectPays",
         getBusinessType: "terminal.query.businessTypes",
         getAssetsType: "terminal.query.assetsTypeStatis",
-        businessCodes: "terminal.query.businessCodes"
+        businessCodes: "terminal.query.businessCodes",
+        validatePrintCode: "terminal.oAuth.printCodeLogin",
+        getPrintCodeInfo: "terminal.bill.printCode.getPrintParam"
       }
     }
   ]
