@@ -59,6 +59,7 @@
                 btnIcon="qrcode"
                 btnText="打印标签"
                 type="tag"
+                @click="printTag"
                 :params="{ codes: ['SB20190814', 'SB20190815'] }"
               />
             </a-col>
@@ -119,7 +120,7 @@
                   <a-col span="18">
                     <div>
                       已选 {{ chooseCount }} 项, 总值
-                      <span>¥{{ chooseMoney }}</span
+                      <em class="price">¥{{ chooseMoney }}</em
                       >元
                     </div>
                   </a-col>
