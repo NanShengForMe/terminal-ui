@@ -45,22 +45,21 @@
                 >清空</a-button
               >
               <a-divider type="vertical" />
-              <a-button
+              <!-- <a-button
                 size="large"
                 type="primary"
                 icon="printer"
                 @click="printTag"
                 :disabled="chooseCount === 0"
                 >打印标签</a-button
-              >
+              > -->
               <PrintButton
                 :disabled="chooseCount === 0"
                 btnType="dashed"
                 btnIcon="qrcode"
                 btnText="打印标签"
                 type="tag"
-                @click="printTag"
-                :params="{ codes: ['SB20190814', 'SB20190815'] }"
+                :params="selectCodesObject"
               />
             </a-col>
           </a-row>
@@ -255,7 +254,8 @@ export default {
           this.query();
         }
       },
-      assetsList: []
+      assetsList: [],
+      selectCode: []
     };
   },
   computed: {
@@ -269,6 +269,16 @@ export default {
       return this.chooseList
         .reduce((price, item) => price + +item.price, 0)
         .toFixed(2);
+    },
+    selectCodesList() {
+      return this.chooseList.map(record => {
+        return record.code;
+      });
+    },
+    selectCodesObject() {
+      var param = {};
+      param.code = this.selectCodesList;
+      return param;
     }
   },
   methods: {
@@ -305,7 +315,7 @@ export default {
           this.assetsList = response.resultset.map(record => {
             record.image = require("@/assets/images/userhead.jpg");
             record.typeName = record.type_name;
-            record.code = "编号：" + record.code;
+            // record.code = record.code;
             record.price = record.price_merge;
             record.factoryNo = record.factory_no;
             record.stockDate = record.stock_date;
