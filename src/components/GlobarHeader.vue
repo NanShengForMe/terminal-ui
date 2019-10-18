@@ -200,7 +200,7 @@ export default {
 .header .logo {
   float: left;
   margin-left: 15px;
-  width: 265px;
+  width: 240px;
   margin-top: 24px;
 }
 

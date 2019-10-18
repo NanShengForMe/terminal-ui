@@ -1,110 +1,118 @@
 <template>
-  <div v-if="bpi">
+  <div>
     <img class="bg" src="@/assets/images/bg.png" alt />
-    <div class="ms">
-      <div>
-        <a-row>
-          <a-col :span="24">
-            <div class="title">业务信息</div>
-          </a-col>
-        </a-row>
-        <a-row>
-          <a-col>
-            <div>
-              <dl>
-                <dd>
-                  <span class="label-ms">业务主题: {{ bpi.subject }}</span>
-                </dd>
-                <dd>
-                  <span class="label-ms"
-                    >业务号&nbsp;&nbsp;&nbsp;：{{ bpi.bpmNo }}</span
-                  >
-                </dd>
-                <dd>
-                  <span class="label-ms">业务类别：{{ bpi.businessName }}</span>
-                </dd>
-                <dd>
-                  <span class="label-ms">提交时间：{{ bpi.submitTime }}</span>
-                </dd>
-                <dd>
-                  <span class="label-ms"
-                    >当前节点：{{ bpi.currentNodeName }}</span
-                  >
-                </dd>
-                <dd>
-                  <span class="label-ms">办结时间：{{ bpi.finishTime }}</span>
-                </dd>
-              </dl>
-            </div>
-          </a-col>
-        </a-row>
-      </div>
-      <div v-if="assetsList">
-        <a-row>
-          <a-col :span="24">
-            <div class="title">
-              资产信息
-              <span style="color: black; font-size: 18px;"
-                >共{{ statistics.count }}台件, 总值￥{{
-                  statistics.price | currency
-                }}元.</span
-              >
-            </div>
-          </a-col>
-        </a-row>
-        <a-row>
-          <a-col :span="6">
-            <span>类别</span>
-          </a-col>
-          <a-col :span="6">
-            <span>编号</span>
-          </a-col>
-          <a-col :span="6">
-            <span>名称</span>
-          </a-col>
-          <a-col :span="6">
-            <span>单价</span>
-          </a-col>
-        </a-row>
-        <a-row>
-          <a-list :dataSource="assetsList" :size="'large'">
-            <a-list-item slot="renderItem" slot-scope="item">
-              <a-col :span="6">{{ item.type_name }}</a-col>
-              <a-col :span="6">{{ item.code }}</a-col>
-              <a-col :span="6">{{ item.name }}</a-col>
-              <a-col :span="6">¥ {{ item.price | currency }}</a-col>
-            </a-list-item>
-          </a-list>
-        </a-row>
-      </div>
+    <div v-if="bpi" style="padding-top: 63px">
+      <div class="ms">
+        <div>
+          <a-row>
+            <a-col :span="24">
+              <div class="title">业务信息</div>
+            </a-col>
+          </a-row>
+          <a-row
+            style="font-family: 'microsoft yahei';
+    font-size: 18px;
+    font-weight: 500;"
+          >
+            <a-col>
+              <div>
+                <dl>
+                  <dd>
+                    <span class="label-ms">业务主题: {{ bpi.subject }}</span>
+                  </dd>
+                  <dd>
+                    <span class="label-ms"
+                      >业务号&nbsp;&nbsp;&nbsp;：{{ bpi.bpmNo }}</span
+                    >
+                  </dd>
+                  <dd>
+                    <span class="label-ms"
+                      >业务类别：{{ bpi.businessName }}</span
+                    >
+                  </dd>
+                  <dd>
+                    <span class="label-ms">提交时间：{{ bpi.submitTime }}</span>
+                  </dd>
+                  <dd>
+                    <span class="label-ms"
+                      >当前节点：{{ bpi.currentNodeName }}</span
+                    >
+                  </dd>
+                  <dd>
+                    <span class="label-ms">办结时间：{{ bpi.finishTime }}</span>
+                  </dd>
+                </dl>
+              </div>
+            </a-col>
+          </a-row>
+        </div>
+        <div v-if="assetsList">
+          <a-row>
+            <a-col :span="24">
+              <div class="title">
+                资产信息
+                <span style="color: black; font-size: 18px;"
+                  >共{{ statistics.count }}台件, 总值￥{{
+                    statistics.price | currency
+                  }}元.</span
+                >
+              </div>
+            </a-col>
+          </a-row>
+          <a-row>
+            <a-col :span="6">
+              <span>类别</span>
+            </a-col>
+            <a-col :span="6">
+              <span>编号</span>
+            </a-col>
+            <a-col :span="6">
+              <span>名称</span>
+            </a-col>
+            <a-col :span="6">
+              <span>单价</span>
+            </a-col>
+          </a-row>
+          <a-row>
+            <a-list :dataSource="assetsList" :size="'large'">
+              <a-list-item slot="renderItem" slot-scope="item">
+                <a-col :span="6">{{ item.type_name }}</a-col>
+                <a-col :span="6">{{ item.code }}</a-col>
+                <a-col :span="6">{{ item.name }}</a-col>
+                <a-col :span="6">¥ {{ item.price | currency }}</a-col>
+              </a-list-item>
+            </a-list>
+          </a-row>
+        </div>
 
-      <div
-        style="position: absolute; bottom: 10px; left: 20px; font-size: 20px;"
-      >
-        打印码: {{ printCode.printCode }}, 可打印次数: {{ printTimes || 0 }}次,
-        创建时间:{{ printCode.createTime }}, 过期时间:{{ expireTime }}:
+        <div
+          style="position: absolute; bottom: 10px; left: 20px; font-size: 20px;"
+        >
+          打印码: {{ printCode.printCode }}, 可打印次数:
+          {{ printTimes || 0 }}次, 创建时间:{{ printCode.createTime }},
+          过期时间:{{ expireTime }}:
+        </div>
       </div>
-    </div>
-    <div class="btn-bar">
-      <PrintButton
-        btnType="dashed"
-        btnIcon="qrcode"
-        v-if="isBpmTag"
-        btnText="打印资产标签"
-        type="tag"
-        :params="{ codes: ['SB20190814', 'SB20190815'] }"
-      />
-      <PrintButton
-        btnType="dashed"
-        btnIcon="qrcode"
-        v-if="isAssetsTag"
-        btnText="打印资产标签"
-        type="tag"
-        :params="{ codes: ['SB20190814', 'SB20190815'] }"
-      />
-      <a-list :dataSource="buttonArr">
-        <a-list-item slot="renderItem" slot-scope="it">
-          <!-- <a-button
+      <div class="btn-bar">
+        <PrintButton
+          btnType="dashed"
+          btnIcon="qrcode"
+          v-if="isBpmTag"
+          btnText="打印资产标签"
+          type="tag"
+          :params="{ codes: ['SB20190814', 'SB20190815'] }"
+        />
+        <PrintButton
+          btnType="dashed"
+          btnIcon="qrcode"
+          v-if="isAssetsTag"
+          btnText="打印资产标签"
+          type="tag"
+          :params="{ codes: ['SB20190814', 'SB20190815'] }"
+        />
+        <a-list :dataSource="buttonArr">
+          <a-list-item slot="renderItem" slot-scope="it">
+            <!-- <a-button
             size="large"
             type="primary"
             icon="qrcode"
@@ -121,24 +129,25 @@
             >打印资产标签</a-button
           > -->
 
-          <!-- <a-button
+            <!-- <a-button
             size="large"
             type="primary"
             icon="qrcode"
             @click="printBill(it)"
             >打印{{ it.name }}</a-button
           > -->
-          <PrintButton
-            :key="it.code"
-            btnType="primary"
-            btnIcon="printer"
-            :btnText="it.name"
-            type="doc"
-            :billCode="it.code"
-            :params="JSON.parse(it.params)"
-          />
-        </a-list-item>
-      </a-list>
+            <PrintButton
+              :key="it.code"
+              btnType="primary"
+              btnIcon="printer"
+              :btnText="it.name"
+              type="doc"
+              :billCode="it.code"
+              :params="JSON.parse(it.params)"
+            />
+          </a-list-item>
+        </a-list>
+      </div>
     </div>
   </div>
 </template>
