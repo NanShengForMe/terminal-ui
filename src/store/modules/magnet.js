@@ -19,7 +19,11 @@ export default {
     LoadMagnets({ commit, getters }) {
       return new Promise((resolve, reject) => {
         const productCode = getters.productCode;
-        getMagnets(productCode)
+        var param = {
+          productCode: productCode,
+          businessRole: "personal"
+        };
+        getMagnets(param)
           .then(magnets => {
             commit("SET_MAGNETS", {
               productCode,

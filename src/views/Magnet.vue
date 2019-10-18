@@ -15,6 +15,8 @@
           desc: '在线打印各个学期的成绩单',
           path: '/codeTag'
         }"
+        :imgpath="'icon-01.png'"
+        :desc="'打印码描述'"
       />
       <MagnetItem
         :item="{
@@ -23,24 +25,16 @@
           desc: '在线打印各个学期的成绩单',
           path: '/assets'
         }"
+        :imgpath="'icon-03.png'"
+        :desc="'标签打印描述'"
       />
       <MagnetItem
-        :item="{
-          icon: require('@/assets/images/icon-01.png'),
-          title: '单据',
-          desc: '在线打印各个学期的成绩单',
-          path: '/business'
-        }"
+        v-for="(item, index) in items"
+        :key="index"
+        :item="item"
+        :imgpath="'icon-02.png'"
+        :desc="'单据打印'"
       />
-      <MagnetItem
-        :item="{
-          icon: require('@/assets/images/icon-01.png'),
-          title: '主页',
-          desc: '在线打印各个学期的成绩单',
-          path: '/home'
-        }"
-      />
-      <MagnetItem v-for="(item, index) in items" :key="index" :item="item" />
     </div>
   </div>
 </template>
@@ -56,6 +50,36 @@ export default {
     items() {
       return this.$store.getters.magnets;
     }
+  },
+  data() {
+    return {
+      des: [
+        {
+          icon: require("@/assets/images/icon-01.png"),
+          title: "打印码",
+          desc: "在线打印各个学期的成绩单",
+          path: "/codeTag"
+        },
+        {
+          icon: require("@/assets/images/icon-01.png"),
+          title: "标签",
+          desc: "在线打印各个学期的成绩单",
+          path: "/assets"
+        },
+        {
+          icon: require("@/assets/images/icon-01.png"),
+          title: "单据",
+          desc: "在线打印各个学期的成绩单",
+          path: "/business"
+        },
+        {
+          icon: require("@/assets/images/icon-01.png"),
+          title: "主页",
+          desc: "在线打印各个学期的成绩单",
+          path: "/home"
+        }
+      ]
+    };
   },
   created() {
     if (!this.items || !this.items.length) {
