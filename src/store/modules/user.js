@@ -13,6 +13,12 @@ export default {
     LOGOUT: state => {
       state.user = {};
       Vue.ls.remove("user");
+    },
+    BILLANDCONFIGCACHE: (state, billAndConfigCache) => {
+      state.billAndConfigCache = billAndConfigCache;
+    },
+    SORTEDNODECACHE: (state, sortedNodeCache) => {
+      state.sortedNodeCache = sortedNodeCache;
     }
   },
   actions: {
@@ -30,15 +36,14 @@ export default {
           .catch(error => reject(error));
       });
     },
-    WeiXinLogin({ commit }, token) {
+    weiXinLogin({ dispatch, commit }, token) {
       return new Promise((resolve, reject) => {
         weiXinLogin(token)
           .then(user => {
             if (user == null) {
               reject(new Error("未找到用户信息"));
             } else {
-              console.log(user);
-              console.log(user.sessionId);
+              dispatch("LoadCurrentProductCache");
               setToken(user.sessionId);
               commit("LOGIN", user);
               resolve(user);

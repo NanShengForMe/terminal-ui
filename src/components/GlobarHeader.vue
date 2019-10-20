@@ -33,11 +33,18 @@
       size="large"
       buttonStyle="solid"
       defaultValue="personal"
+      v-show="isLoggedIn"
       @change="$emit('roleChange', $event.target.value)"
     >
-      <a-radio-button value="personal">个人</a-radio-button>
-      <a-radio-button value="manager">单位</a-radio-button>
-      <a-radio-button value="division">主管</a-radio-button>
+      <a-radio-button value="personal" v-if="personalVisable"
+        >个人</a-radio-button
+      >
+      <a-radio-button value="manager" v-if="managerVisable"
+        >单位</a-radio-button
+      >
+      <a-radio-button value="division" v-if="divisionVisable"
+        >主管</a-radio-button
+      >
     </a-radio-group>
     <!-- </div> -->
     <div class="out pointer" @click="logout" v-if="isLoggedIn">
@@ -50,7 +57,7 @@
         :percent="progressPercent"
         :format="progressFormat"
       />
-      <span class="logout">退出</span>
+      <span class="logout" v-if="isLoggedIn">退出</span>
     </div>
     <router-link to="/home" class="center" v-if="false">
       <img class="icon" src="@/assets/images/user.png" />
@@ -69,6 +76,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { getAssetsMenu } from "@/api/user.js";
 
 export default {
   name: "GlobarHeader",
@@ -80,7 +88,10 @@ export default {
         total: 180,
         current: 180,
         timer: null
-      }
+      },
+      personalVisable: false,
+      managerVisable: false,
+      divisionVisable: false
     };
   },
   computed: {
@@ -162,6 +173,22 @@ export default {
     document.addEventListener("mousemove", this.resetProgress);
     document.addEventListener("touchstart", this.resetProgress);
     document.addEventListener("gesturestart", this.resetProgress);
+    var param = {};
+    getAssetsMenu(param)
+      .then(response => {
+        response.assetsMenu.map(record => {
+          if (record == "个人业务") {
+            this.personalVisable = true;
+          } else if (record == "单位业务") {
+            this.managerVisable = true;
+          } else if (record == "主管业务") {
+            this.divisionVisable = true;
+          }
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 };
 </script>

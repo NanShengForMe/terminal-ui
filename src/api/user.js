@@ -1,5 +1,5 @@
 import Vue from "vue";
-// import store from "@/store";
+import store from "@/store";
 import axios from "@/utils/request.js";
 import { callAction } from "@/utils/request.js";
 
@@ -40,14 +40,22 @@ export const cardLogin = token =>
 //       token
 //     }
 //   });
-export const weiXinLogin = () =>
-  callAction("base.login.login", {
-    userid: "10277",
-    password: "1234"
+// export const weiXinLogin = () =>
+//   callAction("base.login.login", {
+//     userid: "10277",
+//     password: "1234"
+//   });
+export const weiXinLogin = token =>
+  callAction(store.getters.URL.getQrCodeLoginInfo, {
+    token
   });
 
-export const logout = () =>
-  axios({
-    method: "get",
-    url: "/logout"
-  });
+// export const logout = () =>
+//   axios({
+//     method: "get",
+//     url: "/logout"
+//   });
+export const logout = () => callAction(store.getters.URL.logout);
+
+export const getAssetsMenu = param =>
+  callAction(store.getters.URL.getAssetsMenu, param);

@@ -12,15 +12,11 @@
             @click="login('CardLogin', Math.random())"
           />
         </div>
-        <div class="right">
+        <div class="right" @click="login('weiXinLogin', Math.random())">
           <h1>使用微信扫码登录</h1>
           <h2>绑定微信后，使用【扫一扫】功能扫描二维码</h2>
           <!-- <img class="code" src="@/assets/images/two.png" /> -->
-          <div
-            id="qrcode-box"
-            class="code"
-            @click="login('WeiXinLogin', Math.random())"
-          ></div>
+          <div id="qrcode-box" class="code"></div>
           <p class="detail">
             <img class="weixin" src="@/assets/images/weixin.png" />
             <span>使用微信【扫一扫】</span>

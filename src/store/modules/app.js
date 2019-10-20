@@ -1,4 +1,5 @@
 import Vue from "vue";
+import axios from "axios";
 import { getConfig } from "@/api/app.js";
 import { billAndConfigCache, sortedNodeCache } from "@/api/billLink.js";
 
@@ -14,6 +15,7 @@ export default {
     SET_CONFIG: (state, config) => {
       state.config = config;
       state.currentProduct = {};
+      Vue.ls.remove("product");
     },
     SET_CURRENT_PRODUCT: (state, product) => {
       state.currentProduct = product;
@@ -33,24 +35,6 @@ export default {
         getConfig()
           .then(config => {
             if (config) {
-              config.products.forEach(product => {
-                commit("SET_CURRENT_PRODUCT", product);
-                billAndConfigCache()
-                  .then(response => {
-                    product.billAndConfigCache = response;
-                  })
-                  .catch(error => {
-                    Vue.$log.error(error);
-                    product.billAndConfigCache = [];
-                  });
-                sortedNodeCache()
-                  .then(response => (product.sortedNodeCache = response))
-                  .catch(error => {
-                    Vue.$log.error(error);
-                    product.sortedNodeCache = [];
-                  });
-              });
-              commit("CLEAR_CURRENT_PRODUCT");
               commit("SET_CONFIG", config);
               resolve(config);
             } else {
@@ -84,6 +68,47 @@ export default {
         commit("SET_LOADING", loading);
         resolve();
       });
+    },
+    LoadCurrentProductCache({ state, commit }) {
+      return new Promise((resolve, reject) => {
+        debugger;
+        if (state.currentProduct.loadedBillCache === true) {
+          reject();
+        } else {
+          axios
+            .all([billAndConfigCache(), sortedNodeCache()])
+            .then(
+              axios.spread((billCache, nodeCache) => {
+                const config = { ...state.config };
+                let currentProduct;
+                config.products.forEach(product => {
+                  if (product.code !== state.currentProduct.code) {
+                    return;
+                  }
+                  product.billAndConfigCache = billCache;
+                  product.sortedNodeCache = nodeCache;
+                  product.loadedBillCache = true;
+                  currentProduct = product;
+                });
+                commit("SET_CONFIG", config);
+                commit("SET_CURRENT_PRODUCT", currentProduct);
+
+                // const product = { ...state.currentProduct };
+                // product.billAndConfigCache = billCache;
+                // product.sortedNodeCache = nodeCache;
+                // product.loadedBillCache = true;
+
+                // const index = config.products.findIndex(item => product.code === item.code);
+                // const products = config.products.splice(index > 0 ? index - 1 : index, 1, product);
+                // config.products = products;
+                // commit("SET_CONFIG", config);
+                // commit("SET_CURRENT_PRODUCT", product);
+                resolve();
+              })
+            )
+            .catch(error => Vue.$log.error(error));
+        }
+      });
     }
   },
   getters: {
@@ -93,6 +118,7 @@ export default {
     config: state => state.config,
     loading: state => state.loading,
     proxy: state => state.currentProduct.proxy,
-    URL: state => state.currentProduct.url
+    URL: state => state.currentProduct.url,
+    loadedBillCache: state => state.loadedBillCache
   }
 };

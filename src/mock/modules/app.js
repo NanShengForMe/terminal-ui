@@ -72,7 +72,10 @@ Mock.mock(/\/config/, "get", {
         getAssetsType: "terminal.query.assetsTypeStatis",
         businessCodes: "terminal.query.businessCodes",
         validatePrintCode: "terminal.oAuth.printCodeLogin",
-        getPrintCodeInfo: "terminal.bill.printCode.getPrintParam"
+        getPrintCodeInfo: "terminal.bill.printCode.getPrintParam",
+        getAssetsMenu: "terminal.oAuth.assetsMenu",
+        getQrCodeLoginInfo: "terminal.oAuth.getQrCodeLoginInfo",
+        logout: "terminal.oAuth.logout"
       }
     }
   ]
