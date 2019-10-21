@@ -60,7 +60,7 @@ export function businessChangeRow(record) {
   if (record["bpm_no"] && (record["state"] == 0 || record["state"] == 1)) {
     billLink = getPrintableBillHtml(
       record["business_code"],
-      "businessRole",
+      record["businessRole"],
       billParam,
       record["business_code"],
       record["node"],

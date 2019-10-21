@@ -132,7 +132,7 @@ export default {
         limit: 25,
         totals: "sum(num),sum(money)",
         sort: this.sortData,
-        businessRole: "",
+        businessRole: "personal",
         stockState: "",
         printCode: "",
         businessType: this.$route.params.type,
@@ -209,6 +209,7 @@ export default {
           // this.assetsList = response;
           this.assetsList = response.resultset.map(record => {
             record.image = require("@/assets/images/weixin.png");
+            record.businessRole = this.params.businessRole;
             record.billArray = businessChangeRow(record);
             console.log(record);
             return record;
