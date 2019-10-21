@@ -22,10 +22,7 @@ export default new Router({
     {
       path: "/magnet",
       name: "magnet",
-      component: () => import("@/views/Magnet.vue"),
-      meta: {
-        requiresAuth: false
-      }
+      component: () => import("@/views/Magnet.vue")
     },
     {
       path: "/login",
