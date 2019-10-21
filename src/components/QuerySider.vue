@@ -50,9 +50,8 @@
           placeholder="可筛选业务类别"
           notFoundContent="没有可选的业务类别"
           v-model="formData.business"
-          @change="businessChange"
           :loadData="loadBusiness"
-          @onblur="$emit('assetsTypeChange', formData.business)"
+          @change="$emit('assetsTypeChange', formData.business)"
         />
       </a-form-item>
       <a-form-item label="领用单位">
