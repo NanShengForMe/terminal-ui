@@ -38,8 +38,10 @@
             <a-list-item slot="renderItem" slot-scope="item">
               <a-list-item-meta>
                 <slot slot="description">
-                  <div>资产名称：{{ item.subject }}</div>
-                  <div>业务号：{{ item.bpm_no }}</div>
+                  <div>
+                    <em>资产名称：{{ item.subject }}</em>
+                    <span>业务号：{{ item.bpm_no }}</span>
+                  </div>
                   <div class="currency">价格：￥{{ item.money }}</div>
                   <div>时间：{{ item.submit_time | format }}</div>
                   <div>申请人：{{ item.base_teacher_name_request }}</div>
@@ -60,6 +62,7 @@
                   btnIcon="qrcode"
                   btnText="打印标签"
                   type="tag"
+                  :disabled="false"
                   :params="{ bpmNo: item.bpm_no, id: item.id }"
                 />
                 <PrintButton
@@ -70,6 +73,7 @@
                   :btnText="bill.name"
                   type="doc"
                   :billCode="bill.code"
+                  :disabled="false"
                   :params="JSON.parse(bill.params)"
                 />
               </slot>
@@ -277,5 +281,22 @@ export default {
     overflow-y: auto;
     overflow-x: hidden;
   }
+}
+.ant-list-item {
+  padding-left: 10px;
+  background: white;
+  border: 1px solid white;
+  margin: 5px;
+  font-size: 16px;
+}
+.ant-list-item em {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

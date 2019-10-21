@@ -119,7 +119,7 @@
         <dt>联系人A:</dt>
         <dd>152xxxx9527</dd>
       </dl>
-      <img src width="230" height="50" />
+      <img src="@/assets/images/speed.png" width="188" height="50" />
     </div>
   </a-layout-sider>
 </template>
@@ -285,7 +285,7 @@ export default {
 
 <style lang="less" scoped>
 .query-sider {
-  padding: 0 20px;
+  padding: 6px 20px 0px 20px;
   .query-from {
     .ant-form-item {
       padding-bottom: 0;

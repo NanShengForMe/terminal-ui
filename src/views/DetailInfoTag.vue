@@ -90,7 +90,7 @@
         >
           打印码: {{ printCode.printCode }}, 可打印次数:
           {{ printTimes || 0 }}次, 创建时间:{{ printCode.createTime }},
-          过期时间:{{ expireTime }}:
+          过期时间:{{ expireTime }}
         </div>
       </div>
       <div class="btn-bar">
@@ -100,6 +100,7 @@
           v-if="isBpmTag"
           btnText="打印资产标签"
           type="tag"
+          :disabled="false"
           :params="{ bpmNo: this.bpi.bpmNo, id: this.business.id }"
         />
         <PrintButton
@@ -108,6 +109,7 @@
           v-if="isAssetsTag"
           btnText="打印资产标签"
           type="tag"
+          :disabled="false"
           :params="{ selectCodesObject }"
         />
         <a-list :dataSource="buttonArr">
@@ -143,6 +145,7 @@
               :btnText="it.name"
               type="doc"
               :billCode="it.code"
+              :disabled="false"
               :params="JSON.parse(it.params)"
             />
           </a-list-item>
@@ -367,8 +370,8 @@ export default {
 }
 .btn-bar {
   position: absolute;
-  top: 160px;
-  right: 100px;
+  top: 243px;
+  right: 178px;
 }
 .label-ms {
   font-size: large;

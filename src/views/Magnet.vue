@@ -15,7 +15,7 @@
           desc: '在线打印各个学期的成绩单',
           path: '/codeTag'
         }"
-        :imgpath="'icon-01.png'"
+        :icon="'file-text'"
         :desc="'打印码描述'"
       />
       <MagnetItem
@@ -25,14 +25,14 @@
           desc: '在线打印各个学期的成绩单',
           path: '/assets'
         }"
-        :imgpath="'icon-03.png'"
+        :icon="'tags'"
         :desc="'标签打印描述'"
       />
       <MagnetItem
         v-for="(item, index) in items"
         :key="index"
         :item="item"
-        :imgpath="'icon-02.png'"
+        :icon="'copy'"
         :desc="'单据打印'"
       />
     </div>

@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="divbtn">
     <a-button
+      class="sortbtn"
       size="large"
       :type="item.active ? 'primary' : 'default'"
       v-for="(item, index) in sortOptions"
@@ -63,4 +64,13 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.sortbtn {
+  margin-right: 2px;
+}
+.divbtn {
+  position: absolute;
+  top: 0px;
+  left: 11px;
+}
+</style>

@@ -1,6 +1,10 @@
 <template>
   <router-link :to="item.path" class="item pointer">
-    <img class="icon" :src="require('@/assets/images/' + imgpath)" />
+    <a-icon
+      :type="icon"
+      style="color: white;font-size: 72px;position: absolute;left: 10px;top: 20px;"
+    />
+    <!-- <img class="icon" :src="require('@/assets/images/' + imgpath)" /> -->
     <div class="title">{{ item.title }}</div>
     <span class="line"></span>
     <div class="detail">{{ desc }}</div>
@@ -12,7 +16,7 @@ export default {
   name: "MagnetItem",
   props: {
     item: Object,
-    imgpath: String,
+    icon: String,
     desc: String
   }
 };

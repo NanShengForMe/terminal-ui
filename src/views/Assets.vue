@@ -66,9 +66,10 @@
         </a-layout-header>
         <a-layout-content id="assets-content">
           <a-list
-            :grid="{ gutter: 16, xl: 3, xxl: 4 }"
+            :grid="{ gutter: 8, xl: 3, xxl: 4 }"
             :dataSource="assetsList"
-            :size="'large'"
+            :size="'small'"
+            :itemLayout="vertical"
             :pagination="pagination"
           >
             <a-list-item class="list" slot="renderItem" slot-scope="item">
@@ -313,7 +314,7 @@ export default {
         .then(response => {
           console.log(response.resultset);
           this.assetsList = response.resultset.map(record => {
-            record.image = require("@/assets/images/userhead.jpg");
+            record.image = require("@/assets/images/tagimg.png");
             record.typeName = record.type_name;
             // record.code = record.code;
             record.price = record.price_merge;
@@ -385,6 +386,10 @@ export default {
 </style>
 
 <style lang="less" scoped>
+.ant-list-pagination {
+  margin-top: 5px;
+}
+
 #wrapper {
   height: calc(~"100% - 112px");
 }
@@ -399,6 +404,7 @@ export default {
     height: calc(~"100% - 64px");
     overflow-y: auto;
     overflow-x: hidden;
+    padding-left: 9px;
   }
 }
 h1,
