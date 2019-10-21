@@ -71,7 +71,6 @@ export default {
     },
     LoadCurrentProductCache({ state, commit }) {
       return new Promise((resolve, reject) => {
-        debugger;
         if (state.currentProduct.loadedBillCache === true) {
           reject();
         } else {

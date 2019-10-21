@@ -50,7 +50,7 @@ export default new Router({
       }
     },
     {
-      path: "/business",
+      path: "/business/:type/:code",
       name: "business",
       component: () => import("@/views/Business.vue")
     },
