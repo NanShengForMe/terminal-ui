@@ -36,13 +36,13 @@
       v-show="isLoggedIn"
       @change="$emit('roleChange', $event.target.value)"
     >
-      <a-radio-button value="personal" v-if="personalVisable"
+      <a-radio-button value="personal" v-if="user.personalVisable"
         >个人</a-radio-button
       >
-      <a-radio-button value="manager" v-if="managerVisable"
+      <a-radio-button value="manager" v-if="user.managerVisable"
         >单位</a-radio-button
       >
-      <a-radio-button value="division" v-if="divisionVisable"
+      <a-radio-button value="division" v-if="user.divisionVisable"
         >主管</a-radio-button
       >
     </a-radio-group>
@@ -76,7 +76,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getAssetsMenu } from "@/api/user.js";
 
 export default {
   name: "GlobarHeader",
@@ -88,10 +87,7 @@ export default {
         total: 180,
         current: 180,
         timer: null
-      },
-      personalVisable: false,
-      managerVisable: false,
-      divisionVisable: false
+      }
     };
   },
   computed: {
@@ -123,8 +119,8 @@ export default {
         this.$router.push("/");
         this.$notification.info({
           message: "注销登录",
-          description: `${user.nickname}${
-            user.identity === "teacher" ? "老师" : "同学"
+          description: `${user.userinfo.name}${
+            user.userinfo.type === "1" ? "老师" : "同学"
           }，您已安全退出`
         });
       });
@@ -173,22 +169,6 @@ export default {
     document.addEventListener("mousemove", this.resetProgress);
     document.addEventListener("touchstart", this.resetProgress);
     document.addEventListener("gesturestart", this.resetProgress);
-    var param = {};
-    getAssetsMenu(param)
-      .then(response => {
-        response.assetsMenu.map(record => {
-          if (record == "个人业务") {
-            this.personalVisable = true;
-          } else if (record == "单位业务") {
-            this.managerVisable = true;
-          } else if (record == "主管业务") {
-            this.divisionVisable = true;
-          }
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 };
 </script>

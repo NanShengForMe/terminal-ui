@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { cardLogin, weiXinLogin, logout } from "@/api/user.js";
+import { cardLogin, weiXinLogin, logout, getAssetsMenu } from "@/api/user.js";
 import { setToken } from "@/utils/cookie";
 export default {
   state: {
@@ -45,6 +45,22 @@ export default {
             } else {
               dispatch("LoadCurrentProductCache");
               setToken(user.sessionId);
+              var param = {};
+              getAssetsMenu(param)
+                .then(response => {
+                  response.assetsMenu.map(record => {
+                    if (record == "个人业务") {
+                      user.personalVisable = true;
+                    } else if (record == "单位业务") {
+                      user.managerVisable = true;
+                    } else if (record == "主管业务") {
+                      user.divisionVisable = true;
+                    }
+                  });
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
               commit("LOGIN", user);
               resolve(user);
             }
