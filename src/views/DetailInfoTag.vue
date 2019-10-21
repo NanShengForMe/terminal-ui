@@ -11,8 +11,8 @@
           </a-row>
           <a-row
             style="font-family: 'microsoft yahei';
-    font-size: 18px;
-    font-weight: 500;"
+            font-size: 18px;
+            font-weight: 500;"
           >
             <a-col>
               <div>
@@ -100,7 +100,7 @@
           v-if="isBpmTag"
           btnText="打印资产标签"
           type="tag"
-          :params="{ codes: ['SB20190814', 'SB20190815'] }"
+          :params="{ bpmNo: this.bpi.bpmNo, id: this.business.id }"
         />
         <PrintButton
           btnType="dashed"
@@ -108,7 +108,7 @@
           v-if="isAssetsTag"
           btnText="打印资产标签"
           type="tag"
-          :params="{ codes: ['SB20190814', 'SB20190815'] }"
+          :params="{ selectCodesObject }"
         />
         <a-list :dataSource="buttonArr">
           <a-list-item slot="renderItem" slot-scope="it">
@@ -173,6 +173,21 @@ export default {
       isBpmTag: false,
       isAssetsTag: false
     };
+  },
+  computed: {
+    codes() {
+      if (this.isAssetsTag == true) {
+        this.assetsList.map(record => {
+          return record.code;
+        });
+      }
+      return [];
+    },
+    selectCodesObject() {
+      var param = {};
+      param.code = this.codes;
+      return param;
+    }
   },
   methods: {
     printTag() {

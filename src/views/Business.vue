@@ -60,7 +60,7 @@
                   btnIcon="qrcode"
                   btnText="打印标签"
                   type="tag"
-                  :params="{ codes: [item.code] }"
+                  :params="{ bpmNo: item.bpm_no, id: item.id }"
                 />
                 <PrintButton
                   v-for="bill in item.billArray"
