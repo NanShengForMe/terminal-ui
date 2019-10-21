@@ -248,7 +248,10 @@ export default {
       this.params.code = code;
     },
     handlAssetsTypeValue(assetsType) {
-      this.params.assetsType = assetsType;
+      // 第一个值为业务大类
+      this.params.businessType = assetsType[0];
+      // 第二个值为业务编号
+      this.params.businessCode = assetsType[1];
     }
   },
   created() {
