@@ -64,6 +64,8 @@
           placeholder="匹配编号、简拼"
           v-model="formData.dep"
           @change="$emit('depChange', formData.dep)"
+          @focus="showKey('dep')"
+          @keyup="handleInput($event)"
         />
       </a-form-item>
       <a-form-item label="领用人">
@@ -75,6 +77,8 @@
           placeholder="匹配工号、简拼"
           v-model="formData.keeper"
           @change="$emit('keeperChange', formData.keeper)"
+          @focus="showKey('keeper')"
+          @keyup="handleInput($event)"
         />
       </a-form-item>
       <a-form-item label="业务号">
@@ -83,6 +87,8 @@
           placeholder="匹配完整业务号"
           v-model="formData.bpmNo"
           @change="$emit('formValueChange', $event.target.value)"
+          @focus="showKey('bpmNo')"
+          @keyup="handleInput($event)"
         />
       </a-form-item>
       <a-form-item label="资产编号" v-if="isAssets">
@@ -91,6 +97,8 @@
           placeholder="多个编号请用逗号隔开"
           v-model="formData.assetsCode"
           @change="$emit('codeChange', $event.target.value)"
+          @focus="showKey('codes')"
+          @keyup="handleInput($event)"
         />
       </a-form-item>
       <a-form-item label="资产编号" v-if="isBusiness">
@@ -99,6 +107,8 @@
           placeholder="匹配完整编号"
           v-model="formData.assetsCode"
           @change="$emit('codeChange', $event.target.value)"
+          @focus="showKey('codes')"
+          @keyup="handleInput($event)"
         />
       </a-form-item>
       <a-form-item>
@@ -122,6 +132,23 @@
       </dl>
       <img src="@/assets/images/speed.png" width="188" height="50" />
     </div>
+    <div>
+      <a-drawer
+        height="450"
+        placement="bottom"
+        :closable="false"
+        @close="onClose"
+        :visible="showBoard"
+        :wrapClassName="inputType"
+      >
+        <!-- <key-board @delHandle="delKeyVal" @updatekey="GetKeyVal" /> -->
+        <all-key-board
+          @enterHanle="enterKeyVal"
+          @delHandle="delKeyVal"
+          @updatekey="GetKeyVal"
+        />
+      </a-drawer>
+    </div>
   </a-layout-sider>
 </template>
 
@@ -133,22 +160,36 @@ import {
   getBaseDep,
   businessCodes
 } from "@/api/querySider.js";
+import allKeyBoard from "@/components/keyboard/allKey";
 export default {
   name: "QuerySider",
   props: {
     type: String
   },
+  components: { allKeyBoard },
   data() {
     return {
+      value: "",
+      visible: false,
+      layout: "normal",
+      input: null,
+      showBoard: false,
+      keyShow: false,
+      numberList: [],
+      inputType: "",
+      options: {
+        useKbEvents: false,
+        preventClickEvent: false
+      },
       form: this.$form.createForm(this),
       formData: {
-        stockState: undefined,
-        assetsType: undefined,
-        business: undefined,
-        dep: undefined,
-        keeper: undefined,
-        bpmNo: undefined,
-        assetsCode: undefined
+        stockState: "",
+        assetsType: "",
+        business: "",
+        dep: "",
+        keeper: "",
+        bpmNo: "",
+        assetsCode: ""
       },
       assetsTypes: [],
       businesses: [],
@@ -171,6 +212,72 @@ export default {
     }
   },
   methods: {
+    handleInput(e) {
+      e.stopPropagation();
+      console.log(this, e);
+    },
+    enterKeyVal() {},
+    delKeyVal() {
+      if (this.inputType == "codes") {
+        this.formData.assetsCode = this.formData.assetsCode.substr(
+          0,
+          this.formData.assetsCode.length - 1
+        );
+      }
+      if (this.inputType == "bpmNo") {
+        this.formData.bpmNo = this.formData.bpmNo.substr(
+          0,
+          this.formData.bpmNo.length - 1
+        );
+      }
+      if (this.inputType == "keeper") {
+        this.formData.keeper = this.formData.keeper.substr(
+          0,
+          this.formData.keeper.length - 1
+        );
+      }
+      if (this.inputType == "dep") {
+        this.formData.dep = this.formData.dep.substr(
+          0,
+          this.formData.dep.length - 1
+        );
+      }
+    },
+    GetKeyVal(val) {
+      if (this.inputType == "codes") {
+        this.formData.assetsCode += val;
+      }
+      if (this.inputType == "bpmNo") {
+        this.formData.bpmNo += val;
+      }
+      if (this.inputType == "keeper") {
+        this.formData.keeper += val;
+      }
+      if (this.inputType == "dep") {
+        this.formData.dep += val;
+      }
+    },
+    onClose() {
+      this.showBoard = false;
+      if ("keeper" == this.inputType) {
+        this.handleSearchKeeper(this.formData.keeper);
+      } else if ("dep" == this.inputType) {
+        this.handleSearchDep(this.formData.dep);
+      }
+      this.inputType = "";
+    },
+    showKey(type) {
+      if ("codes" == type) {
+        this.inputType = "codes";
+      } else if ("bpmNo" == type) {
+        this.inputType = "bpmNo";
+      } else if ("keeper" == type) {
+        this.inputType = "keeper";
+      } else if ("dep" == type) {
+        this.inputType = "dep";
+      }
+      this.showBoard = true;
+    },
     handleSearchDep(value) {
       if (this.type) {
         var param = {};
