@@ -9,6 +9,7 @@
         @codeChange="handleCodeValue"
         @assetsTypeChange="handlAssetsTypeValue"
         @formValueChange="handleBpmNoValue"
+        @businessStateChange="handleBusinessStateValue"
       />
       <a-layout-content>
         <a-layout-content id="assets-content">
@@ -152,7 +153,8 @@ export default {
         browser_version_: "",
         browser_: "",
         assetsType: "",
-        dep: ""
+        dep: "",
+        businessState: ""
       },
       sortData: "",
       assetsList: [],
@@ -259,6 +261,9 @@ export default {
       this.params.businessType = assetsType[0];
       // 第二个值为业务编号
       this.params.businessCode = assetsType[1];
+    },
+    handleBusinessStateValue(businessState) {
+      this.params.businessState = businessState;
     }
   },
   created() {
