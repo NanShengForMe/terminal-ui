@@ -155,7 +155,7 @@
                     <slot slot="avatar">
                       <img :src="item.image" width="40" />
                       <div style="font-size: 14px; text-align: center;">
-                        {{ item.type }}
+                        {{ item.typeName }}
                       </div>
                     </slot>
                   </a-list-item-meta>
@@ -220,8 +220,10 @@ export default {
         request_method_: "",
         browser_version_: "",
         browser_: "",
-        assetsType: "",
-        dep: ""
+        assetsTypes: "",
+        dep: "",
+        baseDepCode: "",
+        baseDepName: ""
       },
       settings: {
         billPrinter: "",
@@ -352,17 +354,22 @@ export default {
       this.params.bpmNo = bpmNo;
     },
     handleKeeperValue(keeper) {
+      this.params.baseTeacherNo = "";
+      this.params.baseTeacherName = "";
       this.params.baseTeacherNo = keeper.split("-")[0];
       this.params.baseTeacherName = keeper.split("-")[1];
     },
     handleDepValue(dep) {
-      this.params.dep = dep;
+      this.params.baseDepCode = "";
+      this.params.baseDepName = "";
+      this.params.baseDepCode = dep.split("-")[0];
+      this.params.baseDepName = dep.split("-")[1];
     },
     handleCodeValue(code) {
-      this.params.code = code;
+      this.params.keyword = code;
     },
     handlAssetsTypeValue(assetsType) {
-      this.params.assetsType = assetsType;
+      this.params.assetsTypes = assetsType;
     }
   },
   mounted() {

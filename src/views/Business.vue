@@ -40,7 +40,9 @@
                 <slot slot="description">
                   <div>
                     <em>资产名称：{{ item.subject }}</em>
-                    <span>业务号：{{ item.bpm_no }}</span>
+                    <span style="font-size:16px;"
+                      >业务号：{{ item.bpm_no }}</span
+                    >
                   </div>
                   <div class="currency">价格：￥{{ item.money }}</div>
                   <div>时间：{{ item.submit_time | format }}</div>

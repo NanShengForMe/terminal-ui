@@ -87,7 +87,7 @@
       <a-form-item label="资产编号" v-if="isAssets">
         <a-input
           size="large"
-          placeholder="匹配完整编号"
+          placeholder="多个编号请用逗号隔开"
           v-model="formData.assetsCode"
           @change="$emit('codeChange', $event.target.value)"
         />
@@ -172,9 +172,9 @@ export default {
   methods: {
     handleSearchDep(value) {
       if (this.type) {
-        var params = {};
-        params.filter = value;
-        getBaseDep(value)
+        var param = {};
+        param.filter = value;
+        getBaseDep(param)
           .then(response => {
             console.log(response);
             this.deps = response.resultset.map(
