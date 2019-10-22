@@ -67,7 +67,8 @@ export default {
       this.qrCode = new loginQRCode("qrcode-box", 200, 200);
       // 生成微信登录二维码
       this.qrCode.generateLoginQRCode(token =>
-        this.login("WeiXinLogin", token)
+        // console.log("ssssss",token)
+        this.login("weiXinLogin", token)
       );
     },
     destoryWeixinLogin() {
