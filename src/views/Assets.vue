@@ -55,7 +55,7 @@
               > -->
               <PrintButton
                 :disabled="chooseCount === 0"
-                btnType="dashed"
+                btnType="primary"
                 btnIcon="qrcode"
                 btnText="打印标签"
                 type="tag"
@@ -96,7 +96,7 @@
                     </div>
                   </slot>
                   <slot slot="description">
-                    <em class="price">¥ {{ item.price }}</em>
+                    <span class="price">¥ {{ item.price }}</span>
                     <!-- <div class="assets-sn">SN: {{ item.factoryNo }}</div> -->
                     <div class="assets-date">
                       入库时间: {{ item.stockDate | format("YYYY-MM-DD") }}
@@ -426,6 +426,5 @@ h6 {
 }
 .price {
   font-size: 20px;
-  color: #ed5554;
 }
 </style>

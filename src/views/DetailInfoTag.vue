@@ -101,6 +101,7 @@
           btnText="打印资产标签"
           type="tag"
           :disabled="false"
+          :fixflag="true"
           :params="{ bpmNo: this.bpi.bpmNo, id: this.business.id }"
         />
         <PrintButton
@@ -110,6 +111,7 @@
           btnText="打印资产标签"
           type="tag"
           :disabled="false"
+          :fixflag="true"
           :params="{ selectCodesObject }"
         />
         <a-list :dataSource="buttonArr">
@@ -146,6 +148,7 @@
               type="doc"
               :billCode="it.code"
               :disabled="false"
+              :fixflag="true"
               :params="JSON.parse(it.params)"
             />
           </a-list-item>
