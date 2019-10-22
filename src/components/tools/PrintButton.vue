@@ -6,6 +6,7 @@
       :icon="btnIcon"
       @click="handleClick"
       :disabled="disabled"
+      :params="params"
       >{{ btnText }}</a-button
     >
     <a-modal

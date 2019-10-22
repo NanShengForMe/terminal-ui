@@ -200,6 +200,7 @@ export default {
           type: "asc"
         }
       ],
+      param: [],
       params: {
         fields: "",
         start: 1,
@@ -277,9 +278,10 @@ export default {
       });
     },
     selectCodesObject() {
-      var param = {};
-      param.code = this.selectCodesList;
-      return param;
+      let vm = this;
+      vm.$data.param.code = this.selectCodesList;
+      var para = vm.$data.param;
+      return para;
     }
   },
   methods: {

@@ -36,13 +36,13 @@
       v-show="isLoggedIn"
       @change="$emit('roleChange', $event.target.value)"
     >
-      <a-radio-button value="personal" v-if="user.personalVisable"
+      <a-radio-button value="personal" v-if="personalVisable"
         >个人</a-radio-button
       >
-      <a-radio-button value="manager" v-if="user.managerVisable"
+      <a-radio-button value="manager" v-if="managerVisable"
         >单位</a-radio-button
       >
-      <a-radio-button value="division" v-if="user.divisionVisable"
+      <a-radio-button value="division" v-if="divisionVisable"
         >主管</a-radio-button
       >
     </a-radio-group>
@@ -91,7 +91,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLoggedIn", "user", "product"]),
+    ...mapGetters([
+      "isLoggedIn",
+      "user",
+      "product",
+      "personalVisable",
+      "managerVisable",
+      "divisionVisable"
+    ]),
     home() {
       return this.isLoggedIn ? "/home" : "/";
     },

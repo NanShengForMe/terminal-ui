@@ -56,13 +56,13 @@ export default {
                     } else if (record == "主管业务") {
                       user.divisionVisable = true;
                     }
+                    commit("LOGIN", user);
+                    resolve(user);
                   });
                 })
                 .catch(function(error) {
                   console.log(error);
                 });
-              commit("LOGIN", user);
-              resolve(user);
             }
           })
           .catch(error => reject(error));
@@ -81,6 +81,9 @@ export default {
   },
   getters: {
     isLoggedIn: state => Object.keys(state.user).length > 0,
-    user: state => state.user
+    user: state => state.user,
+    personalVisable: state => state.user.personalVisable,
+    managerVisable: state => state.user.managerVisable,
+    divisionVisable: state => state.user.divisionVisable
   }
 };
