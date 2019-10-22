@@ -207,7 +207,7 @@ export default {
         limit: 25,
         totals: "",
         sort: this.sortData,
-        businessRole: "",
+        businessRole: this.$store.getters.firstBusinessRole,
         stockState: "",
         printCode: "",
         businessType: "",

@@ -56,9 +56,16 @@ export default {
                     } else if (record == "主管业务") {
                       user.divisionVisable = true;
                     }
-                    commit("LOGIN", user);
-                    resolve(user);
                   });
+                  if (user.personalVisable) {
+                    user.firstBusinessRole = "personal";
+                  } else if (user.managerVisable) {
+                    user.firstBusinessRole = "manager";
+                  } else if (user.divisionVisable) {
+                    user.firstBusinessRole = "division";
+                  }
+                  commit("LOGIN", user);
+                  resolve(user);
                 })
                 .catch(function(error) {
                   console.log(error);
@@ -84,6 +91,7 @@ export default {
     user: state => state.user,
     personalVisable: state => state.user.personalVisable,
     managerVisable: state => state.user.managerVisable,
-    divisionVisable: state => state.user.divisionVisable
+    divisionVisable: state => state.user.divisionVisable,
+    firstBusinessRole: state => state.user.firstBusinessRole
   }
 };

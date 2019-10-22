@@ -138,7 +138,7 @@ export default {
         limit: 25,
         totals: "sum(num),sum(money)",
         sort: this.sortData,
-        businessRole: "personal",
+        businessRole: this.$store.getters.firstBusinessRole,
         stockState: "",
         printCode: "",
         businessType: this.$route.params.type,
