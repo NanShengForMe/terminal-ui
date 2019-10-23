@@ -154,7 +154,8 @@ export default {
         browser_: "",
         assetsType: "",
         dep: "",
-        businessState: ""
+        businessState: "",
+        state: ""
       },
       sortData: "",
       assetsList: [],
@@ -263,7 +264,7 @@ export default {
       this.params.businessCode = assetsType[1];
     },
     handleBusinessStateValue(businessState) {
-      this.params.businessState = businessState;
+      this.params.state = businessState;
     }
   },
   created() {

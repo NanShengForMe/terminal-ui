@@ -50,7 +50,7 @@ export default {
 
         case "Enter":
           this.keyvalue += "\n";
-          this.$$emit("enterHanle");
+          this.$emit("enterHanle");
           break;
 
         case "Space":

@@ -36,6 +36,7 @@
                 @click="chooseAll"
                 >全选</a-button
               >
+              <a-divider type="vertical" />
               <a-button
                 size="large"
                 type="dashed"
@@ -69,7 +70,7 @@
             :grid="{ gutter: 8, xl: 3, xxl: 4 }"
             :dataSource="assetsList"
             :size="'small'"
-            :itemLayout="vertical"
+            itemLayout="vertical"
             :pagination="pagination"
           >
             <a-list-item class="list" slot="renderItem" slot-scope="item">
@@ -200,7 +201,7 @@ export default {
           type: "asc"
         }
       ],
-      param: [],
+      param: {},
       params: {
         fields: "",
         start: 1,
@@ -281,9 +282,8 @@ export default {
     },
     selectCodesObject() {
       let vm = this;
-      vm.$data.param.code = this.selectCodesList;
-      var para = vm.$data.param;
-      return para;
+      vm.$data.param.codes = this.selectCodesList;
+      return vm.$data.param;
     }
   },
   methods: {

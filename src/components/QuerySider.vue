@@ -66,6 +66,7 @@
           @change="$emit('depChange', formData.dep)"
           @focus="showKey('dep')"
           @keyup="handleInput($event)"
+          :open="depsSelect"
         />
       </a-form-item>
       <a-form-item label="领用人">
@@ -79,6 +80,7 @@
           @change="$emit('keeperChange', formData.keeper)"
           @focus="showKey('keeper')"
           @keyup="handleInput($event)"
+          :open="keepersSelect"
         />
       </a-form-item>
       <a-form-item label="业务号">
@@ -169,18 +171,12 @@ export default {
   components: { allKeyBoard },
   data() {
     return {
-      value: "",
+      keepersSelect: false,
+      depsSelect: false,
       visible: false,
-      layout: "normal",
-      input: null,
       showBoard: false,
       keyShow: false,
-      numberList: [],
       inputType: "",
-      options: {
-        useKbEvents: false,
-        preventClickEvent: false
-      },
       form: this.$form.createForm(this),
       formData: {
         stockState: "",
@@ -223,46 +219,60 @@ export default {
           0,
           this.formData.assetsCode.length - 1
         );
+        this.$emit("codeChange", this.formData.assetsCode);
       }
       if (this.inputType == "bpmNo") {
         this.formData.bpmNo = this.formData.bpmNo.substr(
           0,
           this.formData.bpmNo.length - 1
         );
+        this.$emit("formValueChange", this.formData.bpmNo);
       }
       if (this.inputType == "keeper") {
         this.formData.keeper = this.formData.keeper.substr(
           0,
           this.formData.keeper.length - 1
         );
+        this.handleSearchKeeper(this.formData.keeper);
       }
       if (this.inputType == "dep") {
         this.formData.dep = this.formData.dep.substr(
           0,
           this.formData.dep.length - 1
         );
+        this.handleSearchDep(this.formData.dep);
       }
     },
+    // keyDown(val) {
+
+    // },
     GetKeyVal(val) {
       if (this.inputType == "codes") {
         this.formData.assetsCode += val;
+        this.$emit("codeChange", this.formData.assetsCode);
       }
       if (this.inputType == "bpmNo") {
         this.formData.bpmNo += val;
+        this.$emit("formValueChange", this.formData.bpmNo);
       }
       if (this.inputType == "keeper") {
+        this.keepersSelect = true;
         this.formData.keeper += val;
+        this.handleSearchKeeper(this.formData.keeper);
       }
       if (this.inputType == "dep") {
+        this.depsSelect = true;
         this.formData.dep += val;
+        // this.$emit('handleSearchDep', this.formData.dep);
+        this.handleSearchDep(this.formData.dep);
       }
     },
     onClose() {
       this.showBoard = false;
       if ("keeper" == this.inputType) {
-        this.handleSearchKeeper(this.formData.keeper);
+        this.keepersSelect = false;
       } else if ("dep" == this.inputType) {
-        this.handleSearchDep(this.formData.dep);
+        this.depsSelect = false;
       }
       this.inputType = "";
     },
@@ -279,13 +289,17 @@ export default {
       this.showBoard = true;
     },
     handleSearchDep(value) {
+      let vm = this;
+      if (value == "" || value == undefined) {
+        return;
+      }
       if (this.type) {
         var param = {};
         param.filter = value;
         getBaseDep(param)
           .then(response => {
             console.log(response);
-            this.deps = response.resultset.map(
+            vm.$data.deps = response.resultset.map(
               dep => `${dep.code}-${dep.name}`
             );
           })
@@ -295,6 +309,10 @@ export default {
       }
     },
     handleSearchKeeper(value) {
+      let vm = this;
+      if (value == "" || value == undefined) {
+        return;
+      }
       if (this.type) {
         var param = {};
         param.filter = value;
@@ -303,7 +321,7 @@ export default {
         getBaseTeacher(param)
           .then(response => {
             console.log(response);
-            this.keepers = response.resultset.map(
+            vm.$data.keepers = response.resultset.map(
               keeper => `${keeper.code}-${keeper.name}`
             );
           })
@@ -347,6 +365,7 @@ export default {
     }
   },
   created() {
+    let vm = this;
     if (this.isAssets) {
       var param = {};
       param.businessRole = this.businessRole;
@@ -354,7 +373,7 @@ export default {
         .then(response => {
           console.log(response);
           console.log(Object.keys(response));
-          this.assetsTypes = Object.values(response).map(element => {
+          vm.$data.assetsTypes = Object.values(response).map(element => {
             return {
               label: element.name,
               value: element.code
@@ -372,7 +391,7 @@ export default {
       getBusinessType(params)
         .then(businessTypes => {
           console.log(businessTypes);
-          this.businesses = businessTypes.map(businessType => {
+          vm.$data.businesses = businessTypes.map(businessType => {
             return {
               label: businessType.name,
               value: businessType.code,
@@ -385,8 +404,8 @@ export default {
           console.log(error);
         });
     }
-    this.handleSearchKeeper();
-    this.handleSearchDep();
+    this.handleSearchKeeper(this.formData.keeper);
+    this.handleSearchDep(this.formData.dep);
   }
 };
 </script>
