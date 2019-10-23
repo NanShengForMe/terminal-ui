@@ -19,7 +19,7 @@
           <a-radio-button value="1">已办结</a-radio-button>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="入账状态" v-if="isAssets">
+      <!-- <a-form-item label="入账状态" v-if="isAssets">
         <a-radio-group
           size="large"
           buttonStyle="solid"
@@ -29,7 +29,7 @@
           <a-radio-button value="-1">未入帐</a-radio-button>
           <a-radio-button value="1">已入帐</a-radio-button>
         </a-radio-group>
-      </a-form-item>
+      </a-form-item> -->
       <a-form-item label="资产类别" v-if="isAssets">
         <a-select
           size="large"
