@@ -7,6 +7,7 @@
       @click="handleClick"
       :disabled="disabled"
       :params="params"
+      :class="{ fixwidth: fixflag == true }"
       >{{ btnText }}</a-button
     >
     <a-modal
@@ -83,7 +84,7 @@ export default {
         return {};
       }
     },
-
+    fixflag: Boolean,
     disabled: {
       type: Boolean,
       default: true
@@ -341,6 +342,9 @@ export default {
 }
 .print-animation .doc {
   animation: print-doc 1.5s infinite ease-in;
+}
+.fixwidth {
+  width: 172px;
 }
 @keyframes print-tag {
   0% {

@@ -155,7 +155,9 @@ export default {
         assetsType: "",
         dep: "",
         businessState: "",
-        state: ""
+        state: "",
+        baseDepCode: "",
+        baseDepName: ""
       },
       sortData: "",
       assetsList: [],
@@ -248,11 +250,16 @@ export default {
       this.params.bpmNo = bpmNo;
     },
     handleKeeperValue(keeper) {
+      this.params.baseTeacherNo = "";
+      this.params.baseTeacherName = "";
       this.params.baseTeacherNo = keeper.split("-")[0];
       this.params.baseTeacherName = keeper.split("-")[1];
     },
     handleDepValue(dep) {
-      this.params.dep = dep;
+      this.params.baseDepCode = "";
+      this.params.baseDepName = "";
+      this.params.baseDepCode = dep.split("-")[0];
+      this.params.baseDepName = dep.split("-")[1];
     },
     handleCodeValue(code) {
       this.params.code = code;
