@@ -6,13 +6,7 @@ import { callAction } from "@/utils/request.js";
 export const getCardToken = product => {
   // 轮询时不启用加载中的动画
   Vue.ls.set("ignoreOnceLoading", true);
-  return axios({
-    method: "get",
-    url: "/login/card/token",
-    params: {
-      product
-    }
-  });
+  callAction(store.getters.URL.getCardToken, product);
 };
 
 // export const cardLogin = token =>

@@ -75,7 +75,8 @@ Mock.mock(/\/config/, "get", {
         getPrintCodeInfo: "terminal.bill.printCode.getPrintParam",
         getAssetsMenu: "terminal.oAuth.assetsMenu",
         getQrCodeLoginInfo: "terminal.oAuth.getQrCodeLoginInfo",
-        logout: "terminal.oAuth.logout"
+        logout: "terminal.oAuth.logout",
+        getCardToken: "terminal.oAuth.checkCardLogin"
       }
     }
   ]

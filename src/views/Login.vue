@@ -48,9 +48,8 @@ export default {
       if (!this.enableCardTimer) {
         return false;
       }
-
       // setTimeout(() => {
-      // getCardToken()
+      //   getCardToken()
       //   .then(token => this.login("CardLogin", token))
       //   .catch(this.enableCardLogin);
       // }, 2000);
