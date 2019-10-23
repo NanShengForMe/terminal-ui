@@ -181,7 +181,7 @@ export default {
       formData: {
         stockState: "",
         assetsType: "",
-        business: "",
+        business: [],
         dep: "",
         keeper: "",
         bpmNo: "",
