@@ -26,7 +26,7 @@ module.exports = {
         }
       },
       "/proxy/122": {
-        target: "http://202.115.44.122/sfw/",
+        target: "http://192.168.2.108/sfw/",
         ws: false,
         changeOrigin: true,
         pathRewrite: {
@@ -34,7 +34,7 @@ module.exports = {
         }
       },
       "/proxy/test": {
-        target: "http://localhost/sfw/",
+        target: "http://192.168.2.56/sfw/",
         ws: false,
         changeOrigin: true,
         pathRewrite: {

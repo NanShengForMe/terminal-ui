@@ -208,14 +208,20 @@ export default {
           "e?page=" +
           tagAction +
           "&" +
-          Qs.stringify(this.printParams, { arrayFormat: "brackets" });
+          Qs.stringify(this.printParams, { arrayFormat: "brackets" }) +
+          "&print=true&printer=" +
+          this.$store.getters.tagsName;
         this.printInternal();
       } else {
         // 业务单据需要通过billCode和打印参数获取真实的url
         this.params.code = this.billCode;
         getPrintUrl(this.params)
           .then(url => {
-            this.printUrl = url;
+            this.printUrl =
+              url.pageUrl +
+              "&print=true&printer=" +
+              this.$store.getters.ordinaryName;
+            console.log("this.printUrl", this.printUrl);
             this.printInternal();
           })
           .catch(error => {

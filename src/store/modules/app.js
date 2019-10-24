@@ -1,7 +1,11 @@
 import Vue from "vue";
 import axios from "axios";
 import { getConfig } from "@/api/app.js";
-import { billAndConfigCache, sortedNodeCache } from "@/api/billLink.js";
+import {
+  billAndConfigCache,
+  sortedNodeCache,
+  getConfigValue
+} from "@/api/billLink.js";
 
 export default {
   state: {
@@ -75,9 +79,9 @@ export default {
           reject();
         } else {
           axios
-            .all([billAndConfigCache(), sortedNodeCache()])
+            .all([billAndConfigCache(), sortedNodeCache(), getConfigValue()])
             .then(
-              axios.spread((billCache, nodeCache) => {
+              axios.spread((billCache, nodeCache, SystemConfig) => {
                 const config = { ...state.config };
                 let currentProduct;
                 config.products.forEach(product => {
@@ -86,6 +90,7 @@ export default {
                   }
                   product.billAndConfigCache = billCache;
                   product.sortedNodeCache = nodeCache;
+                  product.SystemConfig = SystemConfig;
                   product.loadedBillCache = true;
                   currentProduct = product;
                 });
@@ -118,6 +123,9 @@ export default {
     loading: state => state.loading,
     proxy: state => state.currentProduct.proxy,
     URL: state => state.currentProduct.url,
-    loadedBillCache: state => state.loadedBillCache
+    loadedBillCache: state => state.loadedBillCache,
+    ordinaryName: state =>
+      state.currentProduct.SystemConfig.ordinary_name.value,
+    tagsName: state => state.currentProduct.SystemConfig.tags_name.value
   }
 };

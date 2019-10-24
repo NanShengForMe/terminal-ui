@@ -3,27 +3,27 @@ import Mock from "mockjs";
 Mock.mock(/\/config/, "get", {
   title: "自助服务终端",
   products: [
-    {
-      icon: require("@/assets/images/equipment.png"),
-      code: "equipment",
-      name: "设备管理系统",
-      desc: Mock.mock("@csentence(30)"),
-      terminalTitle: "设备自助服务终端",
-      proxy: "/proxy/equ",
-      url: {
-        getMagnets: "assets.terminal.patch.getMagnets",
-        billAndConfigCache: "base.business.bill.queryPrintableBill",
-        sortedNodeCache: "base.business.process.node.querySortedNode",
-        getBaseTeacher: "base.teacher.autocomplete",
-        getBaseDep: "assets.acceptance.division.assetsDepsAuto",
-        getBusinessList: "terminal.query.businessList",
-        getPrintUrl: "base.business.bill.printpreview",
-        getTagAction: "assets.acceptance.common.getTagAction",
-        queryProjectPayList: "terminal.query.projectPays",
-        getBusinessType: "terminal.query.businessTypes",
-        getAssetsType: "terminal.query.assetsTypeStatis"
-      }
-    },
+    // {
+    //   icon: require("@/assets/images/equipment.png"),
+    //   code: "equipment",
+    //   name: "设备管理系统",
+    //   desc: Mock.mock("@csentence(30)"),
+    //   terminalTitle: "设备自助服务终端",
+    //   proxy: "/proxy/equ",
+    //   url: {
+    //     getMagnets: "assets.terminal.patch.getMagnets",
+    //     billAndConfigCache: "base.business.bill.queryPrintableBill",
+    //     sortedNodeCache: "base.business.process.node.querySortedNode",
+    //     getBaseTeacher: "base.teacher.autocomplete",
+    //     getBaseDep: "assets.acceptance.division.assetsDepsAuto",
+    //     getBusinessList: "terminal.query.businessList",
+    //     getPrintUrl: "base.business.bill.printpreview",
+    //     getTagAction: "assets.acceptance.common.getTagAction",
+    //     queryProjectPayList: "terminal.query.projectPays",
+    //     getBusinessType: "terminal.query.businessTypes",
+    //     getAssetsType: "terminal.query.assetsTypeStatis"
+    //   }
+    // },
     // {
     //   icon: require("@/assets/images/furniture.png"),
     //   code: "furniture",
@@ -37,19 +37,35 @@ Mock.mock(/\/config/, "get", {
     //     sortedNodeCache: "base.business.process.node.querySortedNode"
     //   }
     // },
-    // {
-    //   icon: require("@/assets/images/equipment.png"),
-    //   code: "122",
-    //   name: "测试系统",
-    //   desc: Mock.mock("@csentence(30)"),
-    //   terminalTitle: "设备自助服务终端",
-    //   proxy: "/proxy/122",
-    //   url: {
-    //     getMagnets: "terminal.query.queryPrintableBusiness",
-    //     billAndConfigCache: "base.business.bill.queryPrintableBill",
-    //     sortedNodeCache: "base.business.process.node.querySortedNode"
-    //   }
-    // },
+    {
+      icon: require("@/assets/images/equipment.png"),
+      code: "122",
+      name: "测试系统",
+      desc: Mock.mock("@csentence(30)"),
+      terminalTitle: "设备自助服务终端",
+      proxy: "/proxy/122",
+      url: {
+        getMagnets: "terminal.query.queryPrintableBusiness",
+        billAndConfigCache: "base.business.bill.queryPrintableBill",
+        sortedNodeCache: "base.business.process.node.querySortedNode",
+        getBaseTeacher: "base.teacher.autocomplete",
+        getBaseDep: "assets.acceptance.division.assetsDepsAuto",
+        getBusinessList: "terminal.query.businessList",
+        getAssetsList: "terminal.query.assetsList",
+        getPrintUrl: "base.business.bill.printpreview",
+        getTagAction: "assets.acceptance.common.getTagAction",
+        queryProjectPayList: "terminal.query.projectPays",
+        getBusinessType: "terminal.query.businessTypes",
+        getAssetsType: "terminal.query.assetsTypeStatis",
+        businessCodes: "terminal.query.businessCodes",
+        validatePrintCode: "terminal.oAuth.printCodeLogin",
+        getPrintCodeInfo: "terminal.bill.printCode.getPrintParam",
+        getAssetsMenu: "terminal.oAuth.assetsMenu",
+        getQrCodeLoginInfo: "terminal.oAuth.getQrCodeLoginInfo",
+        logout: "terminal.oAuth.logout",
+        getCardToken: "terminal.oAuth.checkCardLogin"
+      }
+    },
     {
       icon: require("@/assets/images/equipment.png"),
       code: "test",
@@ -76,7 +92,8 @@ Mock.mock(/\/config/, "get", {
         getAssetsMenu: "terminal.oAuth.assetsMenu",
         getQrCodeLoginInfo: "terminal.oAuth.getQrCodeLoginInfo",
         logout: "terminal.oAuth.logout",
-        getCardToken: "terminal.oAuth.checkCardLogin"
+        getCardToken: "terminal.oAuth.checkCardLogin",
+        getConfigValue: "assets.common.cache.listSystemConfig"
       }
     }
   ]
