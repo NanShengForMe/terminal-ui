@@ -63,7 +63,8 @@ Mock.mock(/\/config/, "get", {
         getAssetsMenu: "terminal.oAuth.assetsMenu",
         getQrCodeLoginInfo: "terminal.oAuth.getQrCodeLoginInfo",
         logout: "terminal.oAuth.logout",
-        getCardToken: "terminal.oAuth.checkCardLogin"
+        getCardToken: "terminal.oAuth.checkCardLogin",
+        getConfigValue: "assets.common.cache.listSystemConfig"
       }
     },
     {

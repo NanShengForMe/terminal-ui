@@ -199,28 +199,32 @@ export default {
         getTagAction()
           .then(url => {
             tagAction = url;
+            this.printUrl =
+              this.$store.getters.proxy +
+              "e?page=" +
+              tagAction +
+              "&" +
+              Qs.stringify(this.printParams, { arrayFormat: "brackets" }) +
+              "&type_=jasper&window_=pdf&print=true&printer=" +
+              encodeURIComponent(this.$store.getters.tagsName);
+            // this.$store.getters.tagsName;
+            console.log("this.printUrl", this.printUrl);
+            this.printInternal();
           })
           .catch(error => {
             this.$log.error(error);
             this.visible = false;
           });
-        this.printUrl =
-          "e?page=" +
-          tagAction +
-          "&" +
-          Qs.stringify(this.printParams, { arrayFormat: "brackets" }) +
-          "&print=true&printer=" +
-          this.$store.getters.tagsName;
-        this.printInternal();
       } else {
         // 业务单据需要通过billCode和打印参数获取真实的url
         this.params.code = this.billCode;
         getPrintUrl(this.params)
           .then(url => {
             this.printUrl =
+              this.$store.getters.proxy +
               url.pageUrl +
-              "&print=true&printer=" +
-              this.$store.getters.ordinaryName;
+              "&window_=pdf&print=true&printer=" +
+              encodeURIComponent(this.$store.getters.ordinaryName);
             console.log("this.printUrl", this.printUrl);
             this.printInternal();
           })
