@@ -282,7 +282,11 @@ export default {
     },
     selectCodesObject() {
       let vm = this;
-      vm.$data.param.codes = this.selectCodesList;
+      var codesStr = "";
+      this.selectCodesList.forEach(record => {
+        codesStr = codesStr + "," + record;
+      });
+      vm.$data.param.codes = codesStr.slice(1);
       return vm.$data.param;
     }
   },

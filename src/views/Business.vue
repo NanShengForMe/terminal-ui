@@ -40,7 +40,7 @@
               <a-list-item-meta>
                 <slot slot="description">
                   <div>
-                    <em>资产名称：{{ item.subject }}</em>
+                    <span class="assetsName">资产名称：{{ item.subject }}</span>
                     <span style="font-size:16px;"
                       >业务号：{{ item.bpm_no }}</span
                     >
@@ -222,7 +222,6 @@ export default {
             record.image = require("@/assets/images/weixin.png");
             record.businessRole = this.params.businessRole;
             record.billArray = businessChangeRow(record);
-            console.log(record);
             return record;
           });
         })
@@ -304,7 +303,7 @@ export default {
   margin: 5px;
   font-size: 16px;
 }
-.ant-list-item em {
+.ant-list-item .assetsName {
   display: block;
   font-size: 20px;
   font-weight: 800;
