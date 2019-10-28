@@ -3,40 +3,66 @@ import Mock from "mockjs";
 Mock.mock(/\/config/, "get", {
   title: "自助服务终端",
   products: [
-    // {
-    //   icon: require("@/assets/images/equipment.png"),
-    //   code: "equipment",
-    //   name: "设备管理系统",
-    //   desc: Mock.mock("@csentence(30)"),
-    //   terminalTitle: "设备自助服务终端",
-    //   proxy: "/proxy/equ",
-    //   url: {
-    //     getMagnets: "assets.terminal.patch.getMagnets",
-    //     billAndConfigCache: "base.business.bill.queryPrintableBill",
-    //     sortedNodeCache: "base.business.process.node.querySortedNode",
-    //     getBaseTeacher: "base.teacher.autocomplete",
-    //     getBaseDep: "assets.acceptance.division.assetsDepsAuto",
-    //     getBusinessList: "terminal.query.businessList",
-    //     getPrintUrl: "base.business.bill.printpreview",
-    //     getTagAction: "assets.acceptance.common.getTagAction",
-    //     queryProjectPayList: "terminal.query.projectPays",
-    //     getBusinessType: "terminal.query.businessTypes",
-    //     getAssetsType: "terminal.query.assetsTypeStatis"
-    //   }
-    // },
-    // {
-    //   icon: require("@/assets/images/furniture.png"),
-    //   code: "furniture",
-    //   name: "家具管理系统",
-    //   desc: Mock.mock("@csentence(30)"),
-    //   terminalTitle: "家具自助服务终端",
-    //   proxy: "/proxy/fur",
-    //   url: {
-    //     getMagnets: "assets.terminal.patch.getMagnets",
-    //     billAndConfigCache: "base.business.bill.queryPrintableBill",
-    //     sortedNodeCache: "base.business.process.node.querySortedNode"
-    //   }
-    // },
+    {
+      icon: require("@/assets/images/equipment.png"),
+      code: "equipment",
+      name: "设备管理系统",
+      desc: Mock.mock("@csentence(30)"),
+      terminalTitle: "设备自助服务终端",
+      proxy: "/proxy/equ",
+      url: {
+        getMagnets: "assets.terminalQuery.queryPrintableBusiness",
+        billAndConfigCache: "base.business.bill.queryPrintableBill",
+        sortedNodeCache: "base.business.process.node.querySortedNode",
+        getBaseTeacher: "base.base.teacher.autocomplete",
+        getBaseDep: "assets.division.assetsDepsAuto",
+        getBusinessList: "assets.terminalQuery.businessList",
+        getAssetsList: "assets.terminalQuery.assetsList",
+        getPrintUrl: "base.business.bill.printpreview",
+        getTagAction: "assets.terminalOAuth.getTagAction",
+        queryProjectPayList: "assets.terminalQuery.projectPays",
+        getBusinessType: "assets.terminalQuery.businessTypes",
+        getAssetsType: "assets.terminalQuery.assetsTypeStatis",
+        businessCodes: "assets.terminalQuery.businessCodes",
+        validatePrintCode: "assets.terminalOAuth.printCodeLogin",
+        getPrintCodeInfo: "assets.bills.printCode.getPrintParam",
+        getAssetsMenu: "assets.terminalOAuth.assetsMenu",
+        getQrCodeLoginInfo: "assets.terminalOAuth.getQrCodeLoginInfo",
+        logout: "assets.terminalOAuth.logout",
+        getCardToken: "assets.terminalOAuth.checkCardLogin",
+        getConfigValue: "assets.cache.listSystemConfig"
+      }
+    },
+    {
+      icon: require("@/assets/images/furniture.png"),
+      code: "furniture",
+      name: "家具管理系统",
+      desc: Mock.mock("@csentence(30)"),
+      terminalTitle: "家具自助服务终端",
+      proxy: "/proxy/fur",
+      url: {
+        getMagnets: "assets.terminalQuery.queryPrintableBusiness",
+        billAndConfigCache: "base.business.bill.queryPrintableBill",
+        sortedNodeCache: "base.business.process.node.querySortedNode",
+        getBaseTeacher: "base.base.teacher.autocomplete",
+        getBaseDep: "assets.division.assetsDepsAuto",
+        getBusinessList: "assets.terminalQuery.businessList",
+        getAssetsList: "assets.terminalQuery.assetsList",
+        getPrintUrl: "base.business.bill.printpreview",
+        getTagAction: "assets.terminalOAuth.getTagAction",
+        queryProjectPayList: "assets.terminalQuery.projectPays",
+        getBusinessType: "assets.terminalQuery.businessTypes",
+        getAssetsType: "assets.terminalQuery.assetsTypeStatis",
+        businessCodes: "assets.terminalQuery.businessCodes",
+        validatePrintCode: "assets.terminalOAuth.printCodeLogin",
+        getPrintCodeInfo: "assets.bills.printCode.getPrintParam",
+        getAssetsMenu: "assets.terminalOAuth.assetsMenu",
+        getQrCodeLoginInfo: "assets.terminalOAuth.getQrCodeLoginInfo",
+        logout: "assets.terminalOAuth.logout",
+        getCardToken: "assets.terminalOAuth.checkCardLogin",
+        getConfigValue: "assets.cache.listSystemConfig"
+      }
+    },
     {
       icon: require("@/assets/images/equipment.png"),
       code: "122",

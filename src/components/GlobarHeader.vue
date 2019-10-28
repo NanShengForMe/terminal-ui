@@ -34,6 +34,7 @@
       buttonStyle="solid"
       defaultValue="personal"
       v-show="isLoggedIn"
+      v-model="businessRole"
       @change="$emit('roleChange', $event.target.value)"
     >
       <a-radio-button value="personal" v-if="personalVisable"
@@ -169,6 +170,7 @@ export default {
         this.countDown.total = this.countDown.current = to.meta.countDown || 60;
         this.enableCountDown();
       }
+      this.$emit("roleChange", this.businessRole);
     }
   },
   mounted() {
