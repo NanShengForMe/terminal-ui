@@ -313,4 +313,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.ant-list-item .ant-list-item-meta {
+  width: 517px;
+}
 </style>
