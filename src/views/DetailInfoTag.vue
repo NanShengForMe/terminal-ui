@@ -177,8 +177,12 @@ export default {
       expireTime: "",
       statistics: {},
       isBpmTag: false,
-      isAssetsTag: false
+      isAssetsTag: false,
+      businessRole: this.$store.getters.firstBusinessRole
     };
+  },
+  mounted() {
+    this.$on("roleChange", this.handleRoleChange);
   },
   computed: {
     codes() {
@@ -301,65 +305,72 @@ export default {
         content: "功能建设中, 敬请期待..."
       });
       console.log(bill);
+    },
+    query() {
+      let vm = this;
+      if (!this.business || !this.business.length) {
+        var param = {};
+        param.printCode = vm.$data.printCodes;
+        getPrintCodeInfo(param)
+          .then(record => {
+            if (record.data.business) {
+              vm.$data.isBpmTag = true;
+            } else {
+              vm.$data.isAssetsTag = true;
+            }
+            vm.$data.assetsList = record.data.assetsList;
+            vm.$data.business = record.data.business;
+            vm.$data.bpi = record.data.bpi;
+            vm.$data.printCode = record.data.printCode;
+            vm.$data.expireTime = record.data.expireTime;
+            vm.$data.printTimes = record.data.printTimes;
+            vm.$data.statistics.price = 0;
+            if (record.data.assetsList) {
+              record.data.assetsList.map(assets => {
+                console.log(assets.price + vm.$data.statistics.price);
+                vm.$data.statistics.price =
+                  parseInt(assets.price) + parseInt(vm.$data.statistics.price);
+              });
+              vm.$data.statistics.count = record.data.assetsList.length;
+            }
+
+            var businessRole = vm.$data.businessRole;
+            var businessCode = "";
+            if (record.data.business) {
+              businessCode = record.data.business.business_code;
+              var billParam = this.packageBillParameters(
+                this.business.business_code,
+                businessRole,
+                this.business,
+                businessCode
+              );
+
+              var billArr = getPrintableBill(
+                businessCode,
+                businessRole,
+                billParam,
+                this.business.business_process_code,
+                this.business.node,
+                this.business.state
+              );
+              vm.$data.buttonArr = billArr;
+              console.log(this.buttonArr);
+            } else {
+              vm.$data.buttonArr = {};
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    },
+    handleRoleChange(role) {
+      this.businessRole = role;
+      this.query();
     }
   },
   created() {
-    let vm = this;
-    if (!this.business || !this.business.length) {
-      var param = {};
-      param.printCode = vm.$data.printCodes;
-      getPrintCodeInfo(param)
-        .then(record => {
-          if (record.data.business) {
-            vm.$data.isBpmTag = true;
-          } else {
-            vm.$data.isAssetsTag = true;
-          }
-          vm.$data.assetsList = record.data.assetsList;
-          vm.$data.business = record.data.business;
-          vm.$data.bpi = record.data.bpi;
-          vm.$data.printCode = record.data.printCode;
-          vm.$data.expireTime = record.data.expireTime;
-          vm.$data.printTimes = record.data.printTimes;
-          vm.$data.statistics.price = 0;
-          if (record.data.assetsList) {
-            record.data.assetsList.map(assets => {
-              console.log(assets.price + vm.$data.statistics.price);
-              vm.$data.statistics.price =
-                parseInt(assets.price) + parseInt(vm.$data.statistics.price);
-            });
-            vm.$data.statistics.count = record.data.assetsList.length;
-          }
-
-          var businessRole = "personal";
-          var businessCode = "";
-          if (record.data.business) {
-            businessCode = record.data.business.business_code;
-            var billParam = this.packageBillParameters(
-              this.business.business_code,
-              businessRole,
-              this.business,
-              businessCode
-            );
-
-            var billArr = getPrintableBill(
-              businessCode,
-              businessRole,
-              billParam,
-              this.business.business_process_code,
-              this.business.node,
-              this.business.state
-            );
-            vm.$data.buttonArr = billArr;
-            console.log(this.buttonArr);
-          } else {
-            vm.$data.buttonArr = {};
-          }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    }
+    this.query();
   }
 };
 </script>
