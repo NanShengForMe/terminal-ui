@@ -353,9 +353,9 @@ export default {
 .print-animation .doc {
   animation: print-doc 1.5s infinite ease-in;
 }
-.fixwidth {
-  width: 172px;
-}
+// .fixwidth {
+//   width: 172px;
+// }
 @keyframes print-tag {
   0% {
     background-position: center -85px;
