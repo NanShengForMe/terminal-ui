@@ -34,7 +34,7 @@ module.exports = {
         }
       },
       "/proxy/test": {
-        target: "http://192.168.2.56/sfw/",
+        target: "http://192.168.2.56:8081/sfw/",
         ws: false,
         changeOrigin: true,
         pathRewrite: {

@@ -1,9 +1,9 @@
 <template>
   <div>
     <img class="bg" src="@/assets/images/bg.png" alt />
-    <div v-if="bpi" style="padding-top: 63px">
+    <div style="padding-top: 63px">
       <div class="ms">
-        <div>
+        <div v-if="bpi">
           <a-row>
             <a-col :span="24">
               <div class="title">业务信息</div>
@@ -59,7 +59,7 @@
               </div>
             </a-col>
           </a-row>
-          <a-row>
+          <a-row style="font-size: large">
             <a-col :span="6">
               <span>类别</span>
             </a-col>
@@ -76,7 +76,7 @@
           <a-row>
             <a-list :dataSource="assetsList" :size="'large'">
               <a-list-item slot="renderItem" slot-scope="item">
-                <a-col :span="6">{{ item.type_name }}</a-col>
+                <a-col :span="6">{{ item.typeName }}</a-col>
                 <a-col :span="6">{{ item.code }}</a-col>
                 <a-col :span="6">{{ item.name }}</a-col>
                 <a-col :span="6">¥ {{ item.price | currency }}</a-col>
@@ -114,7 +114,7 @@
           :fixflag="true"
           :params="{ selectCodesObject }"
         />
-        <a-list :dataSource="buttonArr">
+        <a-list :dataSource="buttonArr" v-if="isBpmTag">
           <a-list-item slot="renderItem" slot-scope="it">
             <!-- <a-button
             size="large"
@@ -310,36 +310,51 @@ export default {
       param.printCode = vm.$data.printCodes;
       getPrintCodeInfo(param)
         .then(record => {
-          if (record.business) {
+          if (record.data.business) {
             vm.$data.isBpmTag = true;
           } else {
             vm.$data.isAssetsTag = true;
           }
-          vm.$data.assetsList = record.assetsList;
-          vm.$data.business = record.business;
-          vm.$data.bpi = record.bpi;
-          vm.$data.printCode = record.printCode;
-          vm.$data.expireTime = record.expireTime;
-          vm.$data.printTimes = record.printTimes;
-          vm.$data.statistics = record.statistics;
+          vm.$data.assetsList = record.data.assetsList;
+          vm.$data.business = record.data.business;
+          vm.$data.bpi = record.data.bpi;
+          vm.$data.printCode = record.data.printCode;
+          vm.$data.expireTime = record.data.expireTime;
+          vm.$data.printTimes = record.data.printTimes;
+          vm.$data.statistics.price = 0;
+          if (record.data.assetsList) {
+            record.data.assetsList.map(assets => {
+              console.log(assets.price + vm.$data.statistics.price);
+              vm.$data.statistics.price =
+                parseInt(assets.price) + parseInt(vm.$data.statistics.price);
+            });
+            vm.$data.statistics.count = record.data.assetsList.length;
+          }
+
           var businessRole = "personal";
-          var businessCode = this.business.business_code;
-          var billParam = this.packageBillParameters(
-            this.business.business_code,
-            businessRole,
-            this.business,
-            businessCode
-          );
-          var billArr = getPrintableBill(
-            businessCode,
-            businessRole,
-            billParam,
-            this.business.business_process_code,
-            this.business.node,
-            this.business.state
-          );
-          vm.$data.buttonArr = billArr;
-          console.log(this.buttonArr);
+          var businessCode = "";
+          if (record.data.business) {
+            businessCode = record.data.business.business_code;
+            var billParam = this.packageBillParameters(
+              this.business.business_code,
+              businessRole,
+              this.business,
+              businessCode
+            );
+
+            var billArr = getPrintableBill(
+              businessCode,
+              businessRole,
+              billParam,
+              this.business.business_process_code,
+              this.business.node,
+              this.business.state
+            );
+            vm.$data.buttonArr = billArr;
+            console.log(this.buttonArr);
+          } else {
+            vm.$data.buttonArr = {};
+          }
         })
         .catch(function(error) {
           console.log(error);
