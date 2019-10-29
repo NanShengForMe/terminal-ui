@@ -32,7 +32,7 @@
 
 <script>
 import loginQRCode from "loginQRCode";
-// import { getCardToken } from "@/api/user.js";
+import { getCardToken } from "@/api/user.js";
 
 export default {
   data() {
@@ -48,11 +48,11 @@ export default {
       if (!this.enableCardTimer) {
         return false;
       }
-      // setTimeout(() => {
-      //   getCardToken()
-      //   .then(token => this.login("CardLogin", token))
-      //   .catch(this.enableCardLogin);
-      // }, 2000);
+      setTimeout(() => {
+        getCardToken()
+          .then(token => this.login("CardLogin", token))
+          .catch(this.enableCardLogin);
+      }, 2000);
     },
     destoryCardLogin() {
       this.enableCardTimer = false;

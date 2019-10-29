@@ -22,15 +22,40 @@ export default {
     }
   },
   actions: {
-    CardLogin({ commit }, token) {
+    CardLogin({ dispatch, commit }, token) {
       return new Promise((resolve, reject) => {
         cardLogin(token)
           .then(user => {
             if (user == null) {
               reject(new Error("未找到用户信息"));
             } else {
-              commit("LOGIN", user);
-              resolve(user);
+              setToken(user.sessionId);
+              dispatch("LoadCurrentProductCache");
+              var param = {};
+              getAssetsMenu(param)
+                .then(response => {
+                  response.assetsMenu.map(record => {
+                    if (record == "个人业务") {
+                      user.personalVisable = true;
+                    } else if (record == "单位业务") {
+                      user.managerVisable = true;
+                    } else if (record == "主管业务") {
+                      user.divisionVisable = true;
+                    }
+                  });
+                  if (user.personalVisable) {
+                    user.firstBusinessRole = "personal";
+                  } else if (user.managerVisable) {
+                    user.firstBusinessRole = "manager";
+                  } else if (user.divisionVisable) {
+                    user.firstBusinessRole = "division";
+                  }
+                  commit("LOGIN", user);
+                  resolve(user);
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
             }
           })
           .catch(error => reject(error));
@@ -43,8 +68,8 @@ export default {
             if (user == null) {
               reject(new Error("未找到用户信息"));
             } else {
-              dispatch("LoadCurrentProductCache");
               setToken(user.sessionId);
+              dispatch("LoadCurrentProductCache");
               var param = {};
               getAssetsMenu(param)
                 .then(response => {

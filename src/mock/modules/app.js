@@ -14,7 +14,7 @@ Mock.mock(/\/config/, "get", {
     //     getMagnets: "assets.terminalQuery.queryPrintableBusiness",
     //     billAndConfigCache: "base.business.bill.queryPrintableBill",
     //     sortedNodeCache: "base.business.process.node.querySortedNode",
-    //     getBaseTeacher: "base.base.teacher.autocomplete",
+    //     getBaseTeacher: "base.teacher.autocomplete",
     //     getBaseDep: "assets.division.assetsDepsAuto",
     //     getBusinessList: "assets.terminalQuery.businessList",
     //     getAssetsList: "assets.terminalQuery.assetsList",
@@ -30,7 +30,8 @@ Mock.mock(/\/config/, "get", {
     //     getQrCodeLoginInfo: "assets.terminalOAuth.getQrCodeLoginInfo",
     //     logout: "assets.terminalOAuth.logout",
     //     getCardToken: "assets.terminalOAuth.checkCardLogin",
-    //     getConfigValue: "assets.cache.listSystemConfig"
+    //     getConfigValue: "assets.cache.listSystemConfig",
+    //     cardLogin: "assets.terminalOAuth.cardLoginForVue"
     //   }
     // },
     // {
@@ -44,7 +45,7 @@ Mock.mock(/\/config/, "get", {
     //     getMagnets: "assets.terminalQuery.queryPrintableBusiness",
     //     billAndConfigCache: "base.business.bill.queryPrintableBill",
     //     sortedNodeCache: "base.business.process.node.querySortedNode",
-    //     getBaseTeacher: "base.base.teacher.autocomplete",
+    //     getBaseTeacher: "base.teacher.autocomplete",
     //     getBaseDep: "assets.division.assetsDepsAuto",
     //     getBusinessList: "assets.terminalQuery.businessList",
     //     getAssetsList: "assets.terminalQuery.assetsList",
@@ -60,7 +61,8 @@ Mock.mock(/\/config/, "get", {
     //     getQrCodeLoginInfo: "assets.terminalOAuth.getQrCodeLoginInfo",
     //     logout: "assets.terminalOAuth.logout",
     //     getCardToken: "assets.terminalOAuth.checkCardLogin",
-    //     getConfigValue: "assets.cache.listSystemConfig"
+    //     getConfigValue: "assets.cache.listSystemConfig",
+    //     cardLogin: "assets.terminalOAuth.cardLoginForVue"
     //   }
     // },
     {
@@ -90,7 +92,8 @@ Mock.mock(/\/config/, "get", {
         getQrCodeLoginInfo: "terminal.oAuth.getQrCodeLoginInfo",
         logout: "terminal.oAuth.logout",
         getCardToken: "terminal.oAuth.checkCardLogin",
-        getConfigValue: "assets.common.cache.listSystemConfig"
+        getConfigValue: "assets.common.cache.listSystemConfig",
+        cardLogin: "terminal.terminalOAuth.cardLoginForVue"
       }
     },
     {
@@ -104,7 +107,7 @@ Mock.mock(/\/config/, "get", {
         getMagnets: "assets.terminalQuery.queryPrintableBusiness",
         billAndConfigCache: "base.business.bill.queryPrintableBill",
         sortedNodeCache: "base.business.process.node.querySortedNode",
-        getBaseTeacher: "base.base.teacher.autocomplete",
+        getBaseTeacher: "base.teacher.autocomplete",
         getBaseDep: "assets.division.assetsDepsAuto",
         getBusinessList: "assets.terminalQuery.businessList",
         getAssetsList: "assets.terminalQuery.assetsList",
@@ -120,7 +123,8 @@ Mock.mock(/\/config/, "get", {
         getQrCodeLoginInfo: "assets.terminalOAuth.getQrCodeLoginInfo",
         logout: "assets.terminalOAuth.logout",
         getCardToken: "assets.terminalOAuth.checkCardLogin",
-        getConfigValue: "assets.cache.listSystemConfig"
+        getConfigValue: "assets.cache.listSystemConfig",
+        cardLogin: "assets.terminalOAuth.cardLoginForVue"
       }
     }
   ]

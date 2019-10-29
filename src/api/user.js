@@ -1,6 +1,6 @@
 import Vue from "vue";
 import store from "@/store";
-import axios from "@/utils/request.js";
+// import axios from "@/utils/request.js";
 import { callAction } from "@/utils/request.js";
 
 export const getCardToken = product => {
@@ -9,22 +9,22 @@ export const getCardToken = product => {
   callAction(store.getters.URL.getCardToken, product);
 };
 
-// export const cardLogin = token =>
-//   callAction(store.getters.URL.cardLogin, token);
+export const cardLogin = token =>
+  callAction(store.getters.URL.cardLogin, token);
 
 // export const weiXinLogin = token =>
 //   callAction(store.getters.URL.weiXinLogin, token);
 
 // export const logout = () => callAction(store.getters.URL.logout);
 
-export const cardLogin = token =>
-  axios({
-    method: "post",
-    url: "/login/card",
-    params: {
-      token
-    }
-  });
+// export const cardLogin = token =>
+//   axios({
+//     method: "post",
+//     url: "/login/card",
+//     params: {
+//       token
+//     }
+//   });
 
 // export const weiXinLogin = token =>
 //   axios({
