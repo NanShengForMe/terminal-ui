@@ -50,7 +50,13 @@ export default {
       }
       setTimeout(() => {
         getCardToken()
-          .then(token => this.login("CardLogin", token))
+          .then(token => {
+            if (token) {
+              this.login("CardLogin", token);
+            } else {
+              this.enableCardLogin;
+            }
+          })
           .catch(this.enableCardLogin);
       }, 2000);
     },

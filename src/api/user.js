@@ -3,10 +3,10 @@ import store from "@/store";
 // import axios from "@/utils/request.js";
 import { callAction } from "@/utils/request.js";
 
-export const getCardToken = product => {
+export const getCardToken = () => {
   // 轮询时不启用加载中的动画
   Vue.ls.set("ignoreOnceLoading", true);
-  callAction(store.getters.URL.getCardToken, product);
+  return callAction(store.getters.URL.getCardToken);
 };
 
 export const cardLogin = token =>

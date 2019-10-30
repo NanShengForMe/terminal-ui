@@ -93,7 +93,7 @@ Mock.mock(/\/config/, "get", {
         logout: "terminal.oAuth.logout",
         getCardToken: "terminal.oAuth.checkCardLogin",
         getConfigValue: "assets.common.cache.listSystemConfig",
-        cardLogin: "terminal.terminalOAuth.cardLoginForVue"
+        cardLogin: "terminal.oAuth.cardLoginForVue"
       }
     },
     {
