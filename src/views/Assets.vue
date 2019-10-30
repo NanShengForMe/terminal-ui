@@ -221,7 +221,7 @@ export default {
         request_method_: "",
         browser_version_: "",
         browser_: "",
-        assetsTypes: "",
+        assetsTypes: [],
         dep: "",
         baseDepCode: "",
         baseDepName: ""
