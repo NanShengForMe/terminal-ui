@@ -50,8 +50,8 @@
       </a-list>
       <iframe
         :src="printUrl"
-        width="100%"
-        height="100%"
+        width="0"
+        height="0"
         frameborder="0"
         name="printFrame"
       ></iframe>
