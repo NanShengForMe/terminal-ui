@@ -65,6 +65,7 @@
                   btnIcon="qrcode"
                   btnText="打印标签"
                   type="tag"
+                  v-show="item.tagVisable"
                   :disabled="false"
                   :params="{ bpmNo: item.bpm_no, id: item.id }"
                 />
@@ -89,6 +90,7 @@
 </template>
 
 <script>
+import $ from "jQuery";
 import QuerySider from "@/components/QuerySider";
 import { getBusinessList } from "@/api/business.js";
 import SortGroup from "@/components/SortGroup";
@@ -222,6 +224,20 @@ export default {
             record.image = require("@/assets/images/weixin.png");
             record.businessRole = this.params.businessRole;
             record.billArray = businessChangeRow(record);
+            if (
+              (record.state == 1 ||
+                (record.state == 0 &&
+                  ("financeaudit" === record.node ||
+                    /^manuallyInputVoucher/.test(record.node)))) &&
+              $.inArray(record.business_code, [
+                "acceptance",
+                "request",
+                "requestfurniture",
+                "requestantique"
+              ]) > -1
+            ) {
+              record.tagVisable = true;
+            }
             return record;
           });
         })

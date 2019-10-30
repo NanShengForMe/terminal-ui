@@ -51,13 +51,13 @@ export default {
       setTimeout(() => {
         getCardToken()
           .then(token => {
-            if (token) {
+            if (token != null) {
               this.login("CardLogin", token);
             } else {
-              this.enableCardLogin;
+              this.enableCardLogin();
             }
           })
-          .catch(this.enableCardLogin);
+          .catch(this.enableCardLogin());
       }, 2000);
     },
     destoryCardLogin() {
