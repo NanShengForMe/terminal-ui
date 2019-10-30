@@ -89,7 +89,7 @@
                       style="font-size: 14px; text-align: center;border: 1px solid green;
                         width: 77px;
                         height: 24px;
-                        top: 138px;
+                        top: 75px;
                         right: 13px;
                         position: absolute;"
                     >
