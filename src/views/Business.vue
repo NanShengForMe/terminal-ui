@@ -214,13 +214,15 @@ export default {
       console.log(bill);
     },
     query() {
+      let vm = this;
+      vm.$data.assetsList = [];
       this.params.start = this.pagination.current;
       this.params.limit = this.pagination.pageSize;
       getBusinessList(this.params)
         .then(response => {
           console.log(response);
           // this.assetsList = response;
-          this.assetsList = response.resultset.map(record => {
+          vm.$data.assetsList = response.resultset.map(record => {
             record.image = require("@/assets/images/weixin.png");
             record.businessRole = this.params.businessRole;
             record.billArray = businessChangeRow(record);

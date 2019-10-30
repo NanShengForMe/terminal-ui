@@ -316,12 +316,14 @@ export default {
       });
     },
     query() {
+      let vm = this;
+      vm.$data.assetsList = [];
       this.params.start = this.pagination.current;
       this.params.limit = this.pagination.pageSize;
       getAssetsList(this.params)
         .then(response => {
           console.log(response.resultset);
-          this.assetsList = response.resultset.map(record => {
+          vm.$data.assetsList = response.resultset.map(record => {
             record.image = require("@/assets/images/tagimg.png");
             record.typeName = record.type_name;
             // record.code = record.code;
