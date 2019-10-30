@@ -244,6 +244,7 @@ export default {
       pagination: {
         current: 1,
         pageSize: 25,
+        total: 0,
         pageSizeOptions: ["5", "10", "25", "50", "100", "200", "500", "1000"],
         showSizeChanger: true,
         showTotal: (total, range) =>
@@ -333,6 +334,7 @@ export default {
             record.checked = false;
             return record;
           });
+          this.pagination.total = response.count;
         })
         .catch(error => {
           this.$notification.error({
