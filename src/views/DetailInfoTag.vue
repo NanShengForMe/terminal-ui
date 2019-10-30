@@ -195,7 +195,11 @@ export default {
     },
     selectCodesObject() {
       var param = {};
-      param.code = this.codes;
+      var codesStr = "";
+      this.codes.forEach(record => {
+        codesStr = codesStr + "," + record;
+      });
+      param.codes = this.codesStr.slice(1);
       return param;
     }
   },
