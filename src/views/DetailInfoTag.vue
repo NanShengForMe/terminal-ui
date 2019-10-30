@@ -391,7 +391,8 @@ export default {
   padding: 10px 35px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
   position: relative;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+  margin-left: 281px;
 }
 .title {
   line-height: 50px;
