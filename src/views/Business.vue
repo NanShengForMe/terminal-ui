@@ -177,7 +177,7 @@ export default {
         position: "top",
         onChange: (page, pageSize) => {
           vm.$data.pagination.current = page;
-          vm.$data.pagination.start = (page - 1) * pageSize;
+          vm.$data.pagination.start = (page - 1) * pageSize + 1;
           this.query();
         },
         onShowSizeChange: (current, size) => {

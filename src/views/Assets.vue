@@ -254,7 +254,7 @@ export default {
         position: "top",
         onChange: (page, pageSize) => {
           this.pagination.current = page;
-          this.pagination.start = (page - 1) * pageSize;
+          this.pagination.start = (page - 1) * pageSize + 1;
           this.query();
         },
         onShowSizeChange: (current, size) => {
