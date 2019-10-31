@@ -242,6 +242,7 @@ export default {
       },
       drawerVisible: false,
       pagination: {
+        start: 1,
         current: 1,
         pageSize: 25,
         total: 0,
@@ -251,8 +252,9 @@ export default {
           `${range[0]} ~ ${range[1]} 项, 共计 ${total} 项`,
         size: "large",
         position: "top",
-        onChange: page => {
+        onChange: (page, pageSize) => {
           this.pagination.current = page;
+          this.pagination.start = (page - 1) * pageSize;
           this.query();
         },
         onShowSizeChange: (current, size) => {
@@ -319,7 +321,7 @@ export default {
     query() {
       let vm = this;
       vm.$data.assetsList = [];
-      this.params.start = this.pagination.current;
+      this.params.start = this.pagination.start;
       this.params.limit = this.pagination.pageSize;
       if (this.params.businessRole == "") {
         // this.params.businessRole = this.$store.getters.firstBusinessRole;

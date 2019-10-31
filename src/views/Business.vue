@@ -117,6 +117,7 @@ export default {
     PrintButton
   },
   data() {
+    let vm = this;
     return {
       sorts: [
         {
@@ -164,6 +165,7 @@ export default {
       sortData: "",
       assetsList: [],
       pagination: {
+        start: 1,
         current: 1,
         pageSize: 25,
         total: 0,
@@ -173,12 +175,13 @@ export default {
           `${range[0]} ~ ${range[1]} 项, 共计 ${total} 项`,
         size: "large",
         position: "top",
-        onChange: page => {
-          this.pagination.current = page;
+        onChange: (page, pageSize) => {
+          vm.$data.pagination.current = page;
+          vm.$data.pagination.start = (page - 1) * pageSize;
           this.query();
         },
         onShowSizeChange: (current, size) => {
-          this.pagination.pageSize = size;
+          vm.$data.pagination.pageSize = size;
           this.query();
         }
       }
@@ -217,7 +220,7 @@ export default {
     query() {
       let vm = this;
       vm.$data.assetsList = [];
-      this.params.start = this.pagination.current;
+      this.params.start = this.pagination.start;
       this.params.limit = this.pagination.pageSize;
       if (this.params.businessRole == "") {
         // this.params.businessRole = this.$store.getters.firstBusinessRole;
