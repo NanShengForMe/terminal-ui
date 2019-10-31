@@ -219,6 +219,9 @@ export default {
       vm.$data.assetsList = [];
       this.params.start = this.pagination.current;
       this.params.limit = this.pagination.pageSize;
+      if (this.params.businessRole == "") {
+        this.params.businessRole = this.$store.getters.firstBusinessRole;
+      }
       getBusinessList(this.params)
         .then(response => {
           console.log(response);
