@@ -207,7 +207,7 @@ export default {
         start: 1,
         limit: 25,
         totals: "",
-        sort: this.sortData,
+        sort: "stock_date desc",
         businessRole: "",
         stockState: "",
         printCode: "",

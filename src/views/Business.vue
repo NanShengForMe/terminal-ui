@@ -140,7 +140,7 @@ export default {
         start: 1,
         limit: 25,
         totals: "sum(num),sum(money)",
-        sort: this.sortData,
+        sort: "submit_time desc",
         businessRole: "",
         stockState: "",
         printCode: "",
