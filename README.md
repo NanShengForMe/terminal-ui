@@ -52,7 +52,7 @@ npm install -g @vue/cli
 克隆项目到本地
 
 ```
-git clone https://gitee.com/lwt-git/terminal-ui.git
+git clone https://github.com/NanShengForMe/terminal-ui.git
 ```
 
 安装依赖
