@@ -67,7 +67,7 @@
                   type="tag"
                   v-show="item.tagVisable"
                   :disabled="false"
-                  :params="{ bpmNo: item.bpm_no, id: item.id }"
+                  :params="item.printTagParam"
                 />
                 <PrintButton
                   v-for="bill in item.billArray"
@@ -220,7 +220,8 @@ export default {
       this.params.start = this.pagination.current;
       this.params.limit = this.pagination.pageSize;
       if (this.params.businessRole == "") {
-        this.params.businessRole = this.$store.getters.firstBusinessRole;
+        // this.params.businessRole = this.$store.getters.firstBusinessRole;
+        return;
       }
       getBusinessList(this.params)
         .then(response => {
@@ -244,6 +245,7 @@ export default {
             ) {
               record.tagVisable = true;
             }
+            record.printTagParam = { bpmNo: record.bpm_no, id: record.id };
             return record;
           });
           this.pagination.total = response.count;
@@ -297,6 +299,7 @@ export default {
     }
   },
   created() {
+    this.$on("roleChange", this.handleRoleChange);
     this.query();
   }
 };
