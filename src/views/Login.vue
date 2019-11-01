@@ -32,12 +32,14 @@
 
 <script>
 import loginQRCode from "loginQRCode";
-import { getCardToken } from "@/api/user.js";
+import { getTsAndTe } from "@/api/user.js";
+import axios from "axios";
 
 export default {
   data() {
     return {
       enableCardTimer: true,
+      cardLoginInter: {},
       qrCode: {
         clear() {}
       }
@@ -48,20 +50,55 @@ export default {
       if (!this.enableCardTimer) {
         return false;
       }
-      setTimeout(() => {
-        getCardToken()
-          .then(token => {
-            if (token != null) {
-              this.login("CardLogin", token);
-            } else {
-              this.enableCardLogin();
-            }
-          })
-          .catch(this.enableCardLogin());
-      }, 2000);
+
+      // 校验用加密方法由sfw提供，暂且这样获取验证参数
+      getTsAndTe()
+        .then(response => {
+          if (response != null) {
+            this.cardLoginInter = setInterval(() => {
+              // 校验用加密方法由sfw提供，暂且这样获取验证参数
+              var ts = response.ts;
+              var te = response.te;
+              var url = "http://127.0.0.1:22322/main?ts=" + ts + "&te=" + te;
+              axios
+                .post(url)
+                .then(res => {
+                  console.log("读卡器返回:" + res);
+                  // 清除定时器
+                  this.destoryCardLogin();
+                  console.log("清除轮询读卡器");
+                  this.login("CardLogin", res);
+                })
+                .catch(e => {
+                  console.log("读卡器服务异常，请核查clientjar是否运行" + e);
+                });
+            }, 2000);
+          } else {
+            console.log("获取验证参数为空（ts&&te）");
+            this.enableCardLogin();
+          }
+        })
+        .catch(e => {
+          console.log("获取验证参数异常（ts&&te）:" + e);
+          this.enableCardLogin();
+        });
+
+      // setTimeout(() => {
+      //   getCardToken()
+      //     .then(token => {
+      //       if (token != null) {
+      //         this.login("CardLogin", token);
+      //       } else {
+      //         this.enableCardLogin();
+      //       }
+      //     })
+      //     .catch(this.enableCardLogin());
+
+      // }, 2000);
     },
     destoryCardLogin() {
       this.enableCardTimer = false;
+      clearInterval(this.cardLoginInter);
     },
     enableWeixinLogin() {
       // 创建二维码对象

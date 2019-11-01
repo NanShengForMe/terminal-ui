@@ -29,7 +29,6 @@ Mock.mock(/\/config/, "get", {
     //     getAssetsMenu: "assets.terminalOAuth.assetsMenu",
     //     getQrCodeLoginInfo: "assets.terminalOAuth.getQrCodeLoginInfo",
     //     logout: "assets.terminalOAuth.logout",
-    //     getCardToken: "assets.terminalOAuth.checkCardLogin",
     //     getConfigValue: "assets.cache.listSystemConfig",
     //     cardLogin: "assets.terminalOAuth.cardLoginForVue"
     //   }
@@ -60,7 +59,6 @@ Mock.mock(/\/config/, "get", {
     //     getAssetsMenu: "assets.terminalOAuth.assetsMenu",
     //     getQrCodeLoginInfo: "assets.terminalOAuth.getQrCodeLoginInfo",
     //     logout: "assets.terminalOAuth.logout",
-    //     getCardToken: "assets.terminalOAuth.checkCardLogin",
     //     getConfigValue: "assets.cache.listSystemConfig",
     //     cardLogin: "assets.terminalOAuth.cardLoginForVue"
     //   }
@@ -91,9 +89,9 @@ Mock.mock(/\/config/, "get", {
         getAssetsMenu: "terminal.oAuth.assetsMenu",
         getQrCodeLoginInfo: "terminal.oAuth.getQrCodeLoginInfo",
         logout: "terminal.oAuth.logout",
-        getCardToken: "terminal.oAuth.checkCardLogin",
         getConfigValue: "assets.common.cache.listSystemConfig",
-        cardLogin: "terminal.oAuth.cardLoginForVue"
+        cardLogin: "terminal.oAuth.cardLoginForVue",
+        getTsAndTe: "terminal.oAuth.getTsAndTe"
       }
     },
     {
@@ -122,9 +120,9 @@ Mock.mock(/\/config/, "get", {
         getAssetsMenu: "assets.terminalOAuth.assetsMenu",
         getQrCodeLoginInfo: "assets.terminalOAuth.getQrCodeLoginInfo",
         logout: "assets.terminalOAuth.logout",
-        getCardToken: "assets.terminalOAuth.checkCardLogin",
         getConfigValue: "assets.cache.listSystemConfig",
-        cardLogin: "assets.terminalOAuth.cardLoginForVue"
+        cardLogin: "assets.terminalOAuth.cardLoginForVue",
+        getTsAndTe: "assets.terminalOAuth.getTsAndTe"
       }
     }
   ]

@@ -1,13 +1,6 @@
-import Vue from "vue";
 import store from "@/store";
 // import axios from "@/utils/request.js";
 import { callAction } from "@/utils/request.js";
-
-export const getCardToken = () => {
-  // 轮询时不启用加载中的动画
-  Vue.ls.set("ignoreOnceLoading", true);
-  return callAction(store.getters.URL.getCardToken);
-};
 
 export const cardLogin = token =>
   callAction(store.getters.URL.cardLogin, token);
@@ -53,3 +46,5 @@ export const logout = () => callAction(store.getters.URL.logout);
 
 export const getAssetsMenu = param =>
   callAction(store.getters.URL.getAssetsMenu, param);
+
+export const getTsAndTe = () => callAction(store.getters.URL.getTsAndTe);
