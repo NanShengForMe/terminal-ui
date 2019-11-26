@@ -6,13 +6,9 @@
         <div class="left">
           <h1>使用一卡通登录</h1>
           <h2>请在一体机的感应处，扫描校园一卡通</h2>
-          <img
-            class="card"
-            src="@/assets/images/card.png"
-            @click="login('CardLogin', Math.random())"
-          />
+          <img class="card" src="@/assets/images/card.png" />
         </div>
-        <div class="right" @click="login('weiXinLogin', Math.random())">
+        <div class="right">
           <h1>使用微信扫码登录</h1>
           <h2>绑定微信后，使用【扫一扫】功能扫描二维码</h2>
           <!-- <img class="code" src="@/assets/images/two.png" /> -->
