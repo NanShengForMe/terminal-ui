@@ -57,12 +57,29 @@ export default new Router({
     {
       path: "/codeTag",
       name: "codeTag",
-      component: () => import("@/views/CodeTag.vue")
+      component: () => import("@/views/CodeTag.vue"),
+      meta: {
+        requiresAuth: false,
+        requiresProduct: true
+      }
     },
     {
       path: "/detailCodeTag/:printCode",
       name: "detailCodeTag",
-      component: () => import("@/views/DetailInfoTag.vue")
+      component: () => import("@/views/DetailInfoTag.vue"),
+      meta: {
+        requiresAuth: false,
+        requiresProduct: true
+      }
+    },
+    {
+      path: "/systemUserLogin",
+      name: "systemUserLogin",
+      component: () => import("@/views/SystemUserLogin.vue"),
+      meta: {
+        requiresAuth: false,
+        requiresProduct: true
+      }
     },
     {
       path: "/test",

@@ -12,8 +12,9 @@
     </router-link>
     <router-link :to="home">
       <img class="logo" src="@/assets/images/logo.png" />
-      <span class="logo-name">智慧华中大</span>
-      <span class="current">{{ product.terminalTitle || "自助服务终端" }}</span>
+      <!-- <span class="logo-name">智慧华中大</span> -->
+      <!-- <span class="current">{{ product.terminalTitle || "自助服务终端" }}</span> -->
+      <span class="current">设备家具自助服务终端</span>
     </router-link>
     <!-- <div  v-if="user.roles && user.roles.includes('manager')"> -->
     <!-- <span
@@ -69,7 +70,8 @@
         {{ user.userinfo.username }}-{{ user.userinfo.name }}
       </div>
       <div class="role">
-        {{ user.identity === "teacher" ? "教师" : "学生" }}
+        <!-- {{ user.identity === "teacher" ? "教师" : "学生" }} -->
+        教师
       </div>
     </div>
   </div>
@@ -165,7 +167,10 @@ export default {
   },
   watch: {
     $route(to) {
-      this.isHome = to.name === "home" || to.name === "index";
+      this.isHome =
+        to.name === "home" ||
+        to.name === "index" ||
+        to.name === "detailCodeTag";
       if (to.matched.some(record => record.meta.countDown !== 0)) {
         this.countDown.total = this.countDown.current = to.meta.countDown || 60;
         this.enableCountDown();
@@ -216,8 +221,9 @@ export default {
 .header .logo {
   float: left;
   margin-left: 15px;
-  width: 240px;
-  margin-top: 24px;
+  width: 288px;
+  margin-top: 20px;
+  margin-right: 11px;
 }
 
 .header .logo-name {
@@ -233,13 +239,13 @@ export default {
 
 .header .current {
   float: left;
-  margin-top: 26px;
+  margin-top: 27px;
   padding-left: 10px;
-  height: 58px;
-  line-height: 58px;
+  height: 57px;
+  line-height: 57px;
   /* border-left: 1px solid #4f4d4b; */
   border-left: 1px solid #cec9c2;
-  font-size: 40px;
+  font-size: 39px;
   font-weight: 300;
   font-family: MicrosoftYaHeiLight, serif;
   color: #444444;

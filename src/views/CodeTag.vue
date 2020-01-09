@@ -51,6 +51,7 @@
 // 全键盘
 import allKeyBoard from "@/components/keyboard/allKey";
 import { validatePrintCode } from "@/api/printCodeLogin.js";
+
 export default {
   name: "SecurityCode",
   props: {
@@ -122,6 +123,7 @@ export default {
         .then(response => {
           console.log(response);
           if (response) {
+            this.$store.dispatch("codeTagLogin", response);
             this.$router.push(`/detailCodeTag/${this.params.printCode}`);
           }
         })

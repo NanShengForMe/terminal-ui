@@ -100,6 +100,11 @@ export default {
           .catch(error => reject(error));
       });
     },
+    codeTagLogin({ dispatch, commit }, user) {
+      setToken(user.sessionId);
+      dispatch("LoadCurrentProductCache");
+      commit("LOGIN", user);
+    },
     Logout({ commit }) {
       return new Promise((resolve, reject) => {
         logout()

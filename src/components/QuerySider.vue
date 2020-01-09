@@ -127,10 +127,10 @@
     <div class="sider-footer">
       <h3>故障联系方式</h3>
       <dl class="speed-link">
-        <dt>联系人A:</dt>
-        <dd>152xxxx9527</dd>
-        <dt>联系人A:</dt>
-        <dd>152xxxx9527</dd>
+        <dt>向小梅:</dt>
+        <dd>18071012486</dd>
+        <dt>设备处:</dt>
+        <dd>87540224转8003</dd>
       </dl>
       <img src="@/assets/images/speed.png" width="188" height="50" />
     </div>

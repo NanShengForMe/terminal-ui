@@ -2,7 +2,7 @@ module.exports = {
   // 开发环境配置
   devServer: {
     port: 8080,
-    open: true,
+    open: false,
     // 页面覆盖显示
     overlay: {
       warnings: false,
@@ -34,7 +34,7 @@ module.exports = {
         }
       },
       "/proxy/test": {
-        target: "http://192.168.2.56:8081/sfw/",
+        target: "http://192.168.2.220:8080/sfw/",
         ws: false,
         changeOrigin: true,
         pathRewrite: {

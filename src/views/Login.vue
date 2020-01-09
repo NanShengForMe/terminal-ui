@@ -19,9 +19,21 @@
           </p>
         </div>
       </div>
-      <a class="back" href="javascript:void(0);" @click="$router.back()"
-        >返回</a
-      >
+      <div class="butbox">
+        <a class="back" href="javascript:void(0);" @click="$router.back()"
+          >返回</a
+        >
+        <router-link :to="{ path: '/codeTag' }" tag="a" class="printCode">
+          打印码打印
+        </router-link>
+        <router-link
+          :to="{ path: '/systemUserLogin' }"
+          tag="a"
+          class="systemUserLogin"
+        >
+          内置用户登陆
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -60,15 +72,18 @@ export default {
                 .post(url)
                 .then(res => {
                   console.log("读卡器返回:" + res);
-                  // 清除定时器
-                  this.destoryCardLogin();
-                  console.log("清除轮询读卡器");
-                  this.login("CardLogin", res);
+                  console.log(res);
+                  if (res.data) {
+                    // 清除定时器
+                    this.destoryCardLogin();
+                    console.log("清除轮询读卡器");
+                    this.login("CardLogin", res.data);
+                  }
                 })
                 .catch(e => {
                   console.log("读卡器服务异常，请核查clientjar是否运行" + e);
                 });
-            }, 2000);
+            }, 500);
           } else {
             console.log("获取验证参数为空（ts&&te）");
             this.enableCardLogin();
@@ -117,9 +132,9 @@ export default {
           const key = "notification_" + Math.random();
           this.$notification.success({
             message: "登录成功",
-            description: `${user.userinfo.name}${
-              user.identity === "teacher" ? "老师" : "同学"
-            }，欢迎回来`,
+            description: `${user.userinfo.name}
+              老师
+            ，欢迎回来`,
             duration: 3,
             key,
             onClick: () => this.$notification.close(key)
@@ -224,16 +239,49 @@ export default {
   width: 30px;
   vertical-align: middle;
 }
+.butbox {
+  width: 600px;
+  text-align: center;
+  margin: auto;
+}
 
 .back {
-  display: block;
+  display: inline-block;
   padding: 8px 0;
   background: #eee;
   color: #666;
   font-size: 20px;
   clear: both;
   width: 120px;
-  margin: 30px auto 0;
+  margin: 30px 35px 0;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.printCode {
+  display: inline-block;
+  padding: 8px 0;
+  background: #eee;
+  color: #666;
+  font-size: 20px;
+  clear: both;
+  width: 120px;
+  margin: 30px 35px 0;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.systemUserLogin {
+  display: inline-block;
+  padding: 8px 0;
+  background: #eee;
+  color: #666;
+  font-size: 20px;
+  clear: both;
+  width: 150px;
+  margin: 30px 35px 0;
   text-align: center;
   border: 1px solid #ddd;
   border-radius: 6px;
