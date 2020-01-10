@@ -78,19 +78,43 @@ export default {
           desc: "在线打印各个学期的成绩单",
           path: "/home"
         }
-      ]
+      ],
+      businessRole: "personal",
+      itemsData: this.$store.getters.magnets
     };
   },
   created() {
-    if (!this.items || !this.items.length) {
-      this.$store.dispatch("LoadMagnets").catch(error => {
-        this.$log.error(error);
-        this.$notification.error({
-          message: "请求错误",
-          description: error.message
+    this.$on("roleChange", this.handleRoleChange);
+    this.query();
+  },
+  methods: {
+    query() {
+      if (!this.items || !this.items.length) {
+        this.$store.dispatch("LoadMagnets", this.businessRole).catch(error => {
+          this.$log.error(error);
+          this.$notification.error({
+            message: "请求错误",
+            description: error.message
+          });
         });
-      });
+      } else if (this.itemsData != null) {
+        this.$store.dispatch("LoadMagnets", this.businessRole).catch(error => {
+          this.$log.error(error);
+          this.$notification.error({
+            message: "请求错误",
+            description: error.message
+          });
+        });
+      }
+    },
+    handleRoleChange(role) {
+      this.itemsData = this.$store.getters.magnets;
+      this.businessRole = role;
+      this.query();
     }
+  },
+  mounted() {
+    this.$on("roleChange", this.handleRoleChange);
   }
 };
 </script>

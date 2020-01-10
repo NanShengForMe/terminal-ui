@@ -16,12 +16,12 @@ export default {
     }
   },
   actions: {
-    LoadMagnets({ commit, getters }) {
+    LoadMagnets({ commit, getters }, businessRole) {
       return new Promise((resolve, reject) => {
         const productCode = getters.productCode;
         var param = {
           productCode: productCode,
-          businessRole: "personal"
+          businessRole: businessRole
         };
         getMagnets(param)
           .then(magnets => {
