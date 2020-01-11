@@ -1,5 +1,11 @@
 import Vue from "vue";
-import { cardLogin, weiXinLogin, logout, getAssetsMenu } from "@/api/user.js";
+import {
+  cardLogin,
+  weiXinLogin,
+  logout,
+  getAssetsMenu,
+  systemUserLogin
+} from "@/api/user.js";
 import { setToken } from "@/utils/cookie";
 export default {
   state: {
@@ -104,6 +110,46 @@ export default {
       setToken(user.sessionId);
       dispatch("LoadCurrentProductCache");
       commit("LOGIN", user);
+    },
+    systemUserLogin({ dispatch, commit }, { userName, pwd }) {
+      return new Promise((resolve, reject) => {
+        systemUserLogin({ userName, pwd })
+          .then(user => {
+            console.log("后台返回===================" + JSON.stringify(user));
+            if (user.result == "error") {
+              reject(new Error("未找到用户信息,请核实您的用户名密码！"));
+            } else {
+              setToken(user.sessionId);
+              dispatch("LoadCurrentProductCache");
+              var param = {};
+              getAssetsMenu(param)
+                .then(response => {
+                  response.assetsMenu.map(record => {
+                    if (record == "个人业务") {
+                      user.personalVisable = true;
+                    } else if (record == "单位业务") {
+                      user.managerVisable = true;
+                    } else if (record == "主管业务") {
+                      user.divisionVisable = true;
+                    }
+                  });
+                  if (user.personalVisable) {
+                    user.firstBusinessRole = "personal";
+                  } else if (user.managerVisable) {
+                    user.firstBusinessRole = "manager";
+                  } else if (user.divisionVisable) {
+                    user.firstBusinessRole = "division";
+                  }
+                  commit("LOGIN", user);
+                  resolve(user);
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
+          })
+          .catch(error => reject(error));
+      });
     },
     Logout({ commit }) {
       return new Promise((resolve, reject) => {

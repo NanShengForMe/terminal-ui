@@ -226,6 +226,11 @@ export default {
         // this.params.businessRole = this.$store.getters.firstBusinessRole;
         return;
       }
+
+      // this.params.baseTeacherNo = this.$store.getters.user.userinfo.username;
+      // this.params.baseDepCode = this.$store.getters.user.userinfo.baseDepCode;
+      // this.params.baseDepName = this.$store.getters.user.userinfo.baseDepName;
+
       getBusinessList(this.params)
         .then(response => {
           console.log(response);

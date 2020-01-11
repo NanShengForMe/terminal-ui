@@ -295,8 +295,8 @@ export default {
   },
   methods: {
     chooseAll() {
-      const start = (this.pagination.current - 1) * this.pagination.pageSize;
-      const end = this.pagination.current * this.pagination.pageSize;
+      const start = 0;
+      const end = this.pagination.pageSize;
       this.assetsList
         .filter((item, index) => index >= start && index < end)
         .forEach(item => (item.checked = true));
@@ -327,6 +327,11 @@ export default {
         // this.params.businessRole = this.$store.getters.firstBusinessRole;
         return;
       }
+
+      // this.params.baseTeacherNo = this.$store.getters.user.userinfo.username;
+      // this.params.baseDepCode = this.$store.getters.user.userinfo.baseDepCode;
+      // this.params.baseDepName = this.$store.getters.user.userinfo.baseDepName;
+
       getAssetsList(this.params)
         .then(response => {
           console.log(response.resultset);

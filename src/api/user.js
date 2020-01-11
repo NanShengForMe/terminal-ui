@@ -48,3 +48,6 @@ export const getAssetsMenu = param =>
   callAction(store.getters.URL.getAssetsMenu, param);
 
 export const getTsAndTe = () => callAction(store.getters.URL.getTsAndTe);
+
+export const systemUserLogin = (userName, pwd) =>
+  callAction(store.getters.URL.systemUserLogin, userName, pwd);

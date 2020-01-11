@@ -18,6 +18,7 @@
             @keyup="handleSnoInput($event)"
             @focus="show('sno')"
             allowClear
+            size="large"
           >
             <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" />
           </a-input>
@@ -37,6 +38,7 @@
             type="password"
             @focus="show('pwd')"
             allowClear
+            size="large"
           >
             <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
           </a-input>
@@ -140,6 +142,35 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
+          let userName = values.sno;
+          let pwd = values.pwd;
+          console.log("=========================" + JSON.stringify(values));
+          console.log(userName);
+          console.log(pwd);
+          this.$store
+            .dispatch("systemUserLogin", { userName, pwd })
+            .then(user => {
+              //  this.$router.push(this.$route.query.redirect);
+              this.$router.push("/magnet");
+
+              const key = "notification_" + Math.random();
+              this.$notification.success({
+                message: "登录成功",
+                description: `${user.userinfo.name}
+               老师
+             ，欢迎回来`,
+                duration: 3,
+                key,
+                onClick: () => this.$notification.close(key)
+              });
+            })
+            .catch(error => {
+              this.$notification.error({
+                message: "登录失败",
+                description: error.message,
+                duration: 3
+              });
+            });
         }
       });
     },
@@ -158,13 +189,14 @@ export default {
 <style lang="less" scoped>
 .login-box {
   width: 500px;
-  height: 300px;
+  height: 222px;
   position: absolute;
   left: 50%;
   top: 50%;
   background-color: white;
   margin-left: -250px;
-  margin-top: -150px;
+  margin-top: -111px;
   padding: 30px;
+  border-radius: 3px;
 }
 </style>
